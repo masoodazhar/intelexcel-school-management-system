@@ -24,7 +24,7 @@ python manage.py runserver
         
 there you go.
 
-**if you get any error let me know by opening an issue. i am actively looking to fix them **
+**if you get any error let me know by opening an issue. i am actively looking to fix them**
 
 
 here is the main screens
