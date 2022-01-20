@@ -1,0 +1,385 @@
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+<link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+
+<style type="text/css">
+
+
+    @import "compass/css3";
+    p{
+
+    }
+    b{
+        font-size: 12px;;
+    }
+    .image {
+        width: 250px;
+        float: left;
+        margin: 20px;
+    }
+
+    @page {
+        size: A4 landscape;
+    }
+
+    .logo {
+        width: auto;
+        float: left;
+        padding: 2px;
+        margin-left: -2px;
+        border: 0px solid #fff;
+    }
+
+    body {
+        font-size: 11px;
+        line-height: 1.1;
+        font-family: calibri;
+        background-image: url("");
+        background-repeat: repeat-x;
+        background-attachment: fixed;
+        background-position: 50% 50% 50% 50%;
+        background-size: 650px 500px;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .performance-facts {
+        border: 1px solid black;
+        margin: 2px;
+        float: left;
+        width: 100%;
+        padding: 2px;
+
+        table {
+            border-collapse: collapse;
+        }
+    }
+
+    .org-name {
+        
+        font-family: Impact, Charcoal, myriadpro;
+        color: #2196F3;
+        font-variant-caps: titling-case;
+        font-weight: bold;
+        font-size: 15.5pt;
+        /* line-height: 25pt; */
+        margin: 0 0 0.15rem 0;
+        
+        /* color: #5cb85c; /* Soft Green Color / soft Blue suggested by RSS Khurram ANES */
+        /* color: rgb(34, 85, 167);  */
+        /* font-family: Impact, Charcoal, myriadpro;
+        font-variant-caps: titling-case;
+        font-weight: bold;
+        font-size: 15.5pt;
+        line-height: 15pt;
+        margin: 0 0 0.15rem 0; */
+    }
+
+    .performance-facts__header {
+        border-bottom: 1px solid #281670;
+        padding: 0 0 0.0rem 0;
+        margin: 0 0 0.0rem 0;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .performance-facts__table {
+        width: 100%;
+
+        thead tr {
+
+            th,
+            td {
+                border: 0;
+            }
+        }
+
+        th,
+        td {
+            font-weight: normal;
+            font-family: calibri;
+            text-align: left;
+            padding: 0.25rem 0;
+            border-top: 1px solid black;
+            white-space: pre-wrap;
+        }
+
+        td {
+            &:last-child {
+                text-align: right;
+            }
+        }
+
+        .blank-cell {
+            width: 1rem;
+            border-top: 0;
+        }
+
+        .thick-row {
+
+            th,
+            td {
+                border-top-width: 5px;
+            }
+        }
+    }
+
+    .small-info {
+        font-size: 0.7rem;
+        border-bottom: 1px solid #281670;
+    }
+
+    .challan-info {
+        font-size: 12px;
+        border-bottom: 1px solid #281670;
+    }
+
+    .small-info-note {
+        font-size: 0.7rem;
+        margin-top: -13px;
+        border-bottom: 1px solid #281670;
+    }
+
+    .small-info-note-1 {
+        font-size: 0.7rem;
+        border-bottom: 0px solid #281670;
+    }
+
+    .performance-facts__table--small {
+        @extend .performance-facts__table;
+        border-bottom: 1px solid #999;
+        margin: 0 0 0.5rem 0;
+
+        thead {
+            tr {
+                border-bottom: 1px solid black;
+            }
+        }
+
+        td {
+            &:last-child {
+                text-align: left;
+            }
+        }
+
+        th,
+        td {
+            border: 0;
+            padding: 0;
+        }
+    }
+
+    .performance-facts__table--grid {
+        @extend .performance-facts__table;
+        margin: 0 0 0.5rem 0;
+
+        td {
+            &:last-child {
+                text-align: left;
+
+                &::before {
+                    content: "•";
+                    font-weight: bold;
+                    margin: 0 0.25rem 0 0;
+                }
+            }
+        }
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .thick-end {
+        border-bottom: 3px solid black;
+    }
+
+    .thin-end {
+        border-bottom: 1px solid black;
+    }
+
+    .email-add {
+        color: #0000cd;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create four equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 100%;
+        padding: 0px 3px 0 0px;
+        height: auto;
+        /* Should be removed. Only for demonstration */
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* .first-row-each-challan-copy{
+        margin-top: 5px;
+        border-top: 1px solid black;
+    } */
+
+    .small-info-note {
+        font-size: 12px;
+        margin-top: -13px;
+        border-bottom: 2px solid #281670;
+    }
+
+    @media print {
+        footer {
+            page-break-after: always;
+        }
+    }
+</style>
+
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Fee Voucher</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    {% for data in murge_data %}
+                                    <div class="col-md-3">
+                                        <div class="column card">
+                                            <section class="performance-facts">
+                                               <div class="row">
+                                                   <div class="col-md-3">
+                                                    <div class="logo">
+                                                        <img class="a" src="{{school_profile.school_logo.url}}" width="63" height="55">
+                                                    </div>                                                   
+                                                   </div>
+                                                   <div class="col-md-9">
+                                                    <header class="performance-facts__header">
+                                                        <h1 class="org-name">{{school_profile.school_name}} </h1>
+                                                        <p> {{school_profile.address}} <br><b>Phone #:</b> {{school_profile.contact_no}}</p>
+                                                    </header>
+                                                   </div>
+                                               </div>
+                                                <table class="performance-facts__table">
+                                                    <thead>
+                                                        <tr class="first-row-each-challan-copy">
+                                                            <th colspan="5" class="challan-info"> Challan No. {{ data.data.challan_number }} </th>
+                                                        </tr>
+                                                        <tr class="first-row-each-challan-copy">
+                                                            <th colspan="3" class="challan-info"> Fee Challan </th>
+                                                            <th colspan="2" class="challan-info"> {{data.copy}} </th>
+                                                        </tr>                     </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th colspan="3" style="color:#03a9f4"><b>Issue Date:</b> {{data.data.issue_date}} </th>
+                                                            <th colspan="2" style="color: red;"><b>Due Date:</b> {{data.data.due_date}}</th>
+                                                        </tr>
+                                                        <tr class="thick-row">
+                                                            <td colspan="5" class="small-info">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;"><b>Reg#:</b></th>
+                                                            <td colspan="2">{{data.data.reg_number}}</td>
+                                                        </tr>
+                                                        <tr>
+                                
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;">Name: </th>
+                                                            <td colspan="2">{{data.data.student_name}}</td>
+                                                        </tr>
+                                                        <tr>
+                                
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;">F/Name: </th>
+                                                            <td colspan="2">{{data.data.father_name}} </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;"><b>Class:</b></th>
+                                                            <td colspan="2">{{data.data.class_name}}</td>
+                                                        </tr>
+                                                        <tr style="color: rgb(34, 85, 167) !important;">
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px; color: #03a9f4;"><b>Fee Month(s): </b></th>
+                                                            <td colspan="2" style="color: #03a9f4; font-weight: bold;">{{data.data.fee_month}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;"><b>Tution Fee p/m:</b></th>
+                                                            <td colspan="2">{{data.data.monthly_tution_fee}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" style="background: #ececec; border: 1px solid #ccc;">Description</th>
+                                                            <th colspan="2" style="background: #ececec; border: 1px solid #ccc;">Amount</th>
+                                                        </tr>
+                                                        <tr class="thick-end">
+                                                            <th colspan="3" style="text-align: left; text-indent: 0px;"><b>Tution Fee:</b></th>
+                                                            <td colspan="2">{{data.data.monthly_tution_fee}}</td>
+                                                        </tr>                         <tr style="color: rgb(34, 85, 167) !important;">
+                                                            <th colspan="3" style="background: #ffffff; border-top: 2px solid #adaaaa;text-align: right; color: #03a9f4; font-weight: bold;">Total Amount:</th>
+                                                            <th colspan="2" style="background: #ececec; border: 1px solid #ccc; text-align: left; color: #03a9f4; font-weight: bold;">{{data.data.monthly_tution_fee}}</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <th colspan="3" style="background: #ffffff; border-top: 1px solid #adaaaa;text-align: right;">In Words:</th>
+                                                            <th colspan="2" style="background: #ececec; border: 1px solid #ccc; text-align: left; font-size: 12px;"> {{data.data.monthly_tution_fee_in_word}} </th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>                     <p class="small-info-note">
+                                                        <b style="color: red">Note:</b>
+                                                    </p>
+                                                        <p class="small-info-note-1 text-left" style="color:red; "> Due date of Fee is 7th of Each month. <br>After Due date fine of Rs.50 will be charged per day.    </p>                     <br> <br> <br>                 
+                                
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="3">____________</td>
+                                                            <td colspan="2">____________</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="3" style="text-align: center;">Depositor</td>
+                                                            <td colspan="2" style="text-align: center;">Cashier</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </section>
+                                        </div>  
+                                    </div>
+                                    {% empty %}
+                                    <h1> No Voucher Selected For Print. Kindly Select at least one. </h1>
+                                    {% endfor %}
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div><!--/.body content-->

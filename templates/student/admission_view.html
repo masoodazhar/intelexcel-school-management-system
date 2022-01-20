@@ -1,0 +1,84 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'student/student_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">All Registerd Student List</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                               <a href="{% url 'student:admission_create' %}" class="btn btn-primary">New Admission</a>
+                                <div class="table-responsive my-4">
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>S-No</th>
+                                              <th>Photo</th>
+                                              <th>Class</th>
+                                              <th>Section</th>
+                                              <th>Registration</th>
+                                              <th>Name</th>
+                                              <th>Father Name</th>
+                                              <th>Contact</th>
+                                              <th>Tution Fee</th>
+                                              <th>Action</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                       
+                                       {% for admission in admission_view %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td><img src="{{ admission.photo.url }}" alt="" style="width:46px; height: 45px;"></td>
+                                                <td>{{ admission.admission_class }}</td>
+                                                <td>{{ admission.admission_section }}</td>
+                                                <td>{{ admission.admission_registration }}</td>
+                                                <td>{{ admission.name_of_student }}</td>
+                                                <td>{{ admission.father_name }}</td>
+                                                <td>{{ admission.contact }}</td>
+                                                <td>{{ admission.monthly_tution_fee }}</td>
+                                                <td>
+                                                    <a href="{% url 'student:admission_update' pk=admission.pk %}" class="btn btn-labeled btn-success mb-2 mr-1">
+                                                        <span class="btn-label"><i class="glyphicon glyphicon-pencil"></i></span>Edit
+                                                    </a>
+                                                    <a href="{% url 'student:view_individual_marks' student_name=admission.pk %}" class="btn btn-labeled btn-primary mb-2 mr-1">
+                                                        <span class="btn-label"><i class="glyphicon glyphicon-eye-open"></i></span>View
+                                                    </a>
+                                                    
+                                                    <a href="{% url 'student:admission_delete' pk=admission.pk %}" class="btn btn-labeled btn-warning mb-2 mr-1">
+                                                        <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Delete
+                                                    </a>
+                                              
+                                                </td>
+                                            </tr>
+                                       {% endfor %}
+
+                                      </tbody>
+
+                                  </table>
+                              </div> 
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

@@ -1,0 +1,78 @@
+
+
+
+<style>
+    .nav-design {
+        border-right: 1px solid;
+        padding: 7px 12px 5px 12px;
+        background: #1c1f22;
+        /* margin: 5px; */
+    }
+    .nav-design a{
+        color: white;
+    }
+    .nav-design:hover{
+        background: brown;
+        color: brown;
+        content: 'sdasdsd';
+    }
+  
+    .selected-nav{
+        background: brown;
+        color: brown;
+    }
+  
+</style>
+
+<nav aria-label="breadcrumb" class="col-12 order-sm-last ">
+    <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0" style="width: 100%; background-color: #1c1f22 !important; padding: 0;">
+   
+        {% url 'student:student_view' as student_view %}
+        <li class="nav-design {% if request.path == student_view %} selected-nav {% endif %}">
+            <a href="{% url 'student:student_view' %}">
+                All (Student Data)
+            </a>
+        </li>
+        {% url 'student:admission_view' as admission_view %}
+        <li class="nav-design {% if request.path == admission_view %} selected-nav {% endif %}">
+            <a href="{% url 'student:admission_view' %}">
+                View & New Admission (Student's)
+            </a>
+        </li>
+        {% url 'student:attendance_view' as attendance_view %}
+        <li class="nav-design {% if request.path == attendance_view %} selected-nav {% endif %}">
+            <a href="{% url 'student:attendance_view' %}">
+                View Attendance
+            </a>
+        </li>
+        {% url 'student:attendance_search' as attendance_search %}
+        <li class="nav-design {% if request.path == attendance_search %} selected-nav {% endif %}">
+            <a href="{% url 'student:attendance_search' %}">
+                Mark Attendance
+            </a>
+        </li>
+        {% url 'student:mark_distribution_create' as mark_distribution_create %}
+        <li class="nav-design {% if request.path == mark_distribution_create %} selected-nav {% endif %}">
+            <a href="{% url 'student:mark_distribution_create' %}">
+                Marks Distribution
+            </a>
+        </li>
+        {% url 'student:student_mark' as student_mark %}
+        <li class="nav-design {% if request.path == student_mark %} selected-nav {% endif %}">
+            <a href="{% url 'student:student_mark' %}">
+                Manage Marks
+            </a>
+        </li>
+        {% url 'student:view_exams' as view_exams %}
+        <li class="nav-design {% if request.path == view_exams %} selected-nav {% endif %}">
+            <a href="{% url 'student:view_exams' %}">
+                Exams
+            </a>
+        </li>      
+        
+    </ol>
+</nav>
+
+
+
+

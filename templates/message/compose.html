@@ -1,0 +1,19 @@
+{% extends 'message/master_mail.html' %}
+{% load crispy_forms_tags %}
+
+{% block mailbody %}
+                   
+
+
+
+<div class="col-md-12 col-lg-9 p-0 inbox-mail p-3">
+
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form|crispy}}
+    <input type="submit" class="btn btn-primary">
+</form>
+</div>
+
+{% endblock %}
+

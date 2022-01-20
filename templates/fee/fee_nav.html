@@ -1,0 +1,68 @@
+<style>
+    .nav-design {
+        border-right: 1px solid;
+        padding: 7px 12px 5px 12px;
+        background: #1c1f22;
+        /* margin: 5px; */
+    }
+    .nav-design a{
+        color: white;
+    }
+    .nav-design:hover{
+        background: brown;
+        color: brown;
+        content: 'sdasdsd';
+    }
+  
+    .selected-nav{
+        background: brown;
+        color: brown;
+    }
+  
+</style>
+
+<nav aria-label="breadcrumb" class="col-12 order-sm-last ">
+    <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0" style="width: 100%; background-color: #1c1f22 !important; padding: 0;">
+   
+        {% url 'fee:fee_main' as fee_main %}
+        <li class="nav-design {% if request.path == fee_main %} selected-nav {% endif %}">
+            <a href="{% url 'fee:fee_main'%}" >
+                All (home)
+             </a>
+        </li>
+        {% url 'fee:generate_challan' as generate_challan %}
+        <li class="nav-design {% if request.path == generate_challan %} selected-nav {% endif %}">
+            <a href="{% url 'fee:generate_challan'%}" >
+                Generate Challan
+            </a>
+        </li>
+        {% url 'fee:unpaid_challan' as unpaid_challan %}
+        <li class="nav-design {% if request.path == unpaid_challan %} selected-nav {% endif %}">
+            <a href="{% url 'fee:unpaid_challan'%}" >
+                Pay Challan</a> 
+            </a>            
+        </li>
+        {% url 'fee:fee_defaulter' as fee_defaulter %}
+        <li class="nav-design {% if request.path == fee_defaulter %} selected-nav {% endif %}">
+            <a href="{% url 'fee:fee_defaulter'%}" >
+                Fee Defaulters
+            </a>
+        </li>
+        {% url 'account:expense_view' as expense_view %}
+        <li class="nav-design {% if request.path == expense_view %} selected-nav {% endif %}">
+            <a href="{% url 'account:expense_view'%}" >
+                Expense Info
+            </a>
+        </li>
+        {% url 'account:income_view' as income_view %}
+        <li class="nav-design {% if request.path == income_view %} selected-nav {% endif %}">
+            <a href="{% url 'account:income_view'%}"  >
+                Income Info
+            </a> 
+        </li>
+
+
+
+
+    </ol>
+</nav>

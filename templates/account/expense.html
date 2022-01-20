@@ -1,0 +1,65 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'fee/fee_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">All Expenses</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'account:expense_create' %}" class="btn btn-primary">add new</a>
+                                <div class="table-responsive my-4">
+                                    
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>S-No</th>
+                                              <th>Name</th>
+                                              <th>Date</th>
+                                              <th>File</th>
+                                              <th>Note</th>
+                                              <th>Action</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for expense in expenses %}
+                                        <tr>
+                                            <td> {{forloop.counter}} </td>
+                                            <td> {{expense.name}} </td>
+                                            <td> {{expense.date}} </td>
+                                            <td> <a href="{{expense.file.url}}" download="download">Download</a> </td>
+                                            <td> {{expense.note}} </td>
+                                            <td>
+                                                <a href="{% url 'account:expense_update' pk=expense.pk %}">Edit</a> | 
+                                                <a href="{% url 'account:expense_delete' pk=expense.pk %}">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+
+                                  </table>
+                              </div>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

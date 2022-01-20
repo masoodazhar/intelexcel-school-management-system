@@ -1,0 +1,71 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'payroll/payroll_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Project status</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                               <form action="" method="POST">
+                                   {% csrf_token %}
+
+                                   <div class="row">
+                                       <div class="col-md-3">
+                                        {{form.employee_name|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3">
+                                        {{form.date|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3">
+                                        {{form.time_in|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3">
+                                        {{form.time_out|as_crispy_field}}
+                                       </div>
+                                   </div>
+                                   <input type="submit" value="Mark" class="btn btn-primary">
+                               </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            $('#id_date').change(function(){
+                var date = $(this).val();
+                var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+                var currentdate =new Date(date)
+                if(weekday[currentdate.getDay()]=='Sunday'){
+                    $(this).parent().append('<p >Selected date it include (Sunday). </p>').css('color', 'red');
+                    $(this).val('');
+                }else{
+                    $(this).parent().find('p').remove();
+                }
+            });
+        });
+    </script>
+{% endblock %}

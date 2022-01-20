@@ -1,0 +1,277 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <!-- <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Welcome to Intelexcel School Management System</h6>
+                                    </div>
+                                    <p id="chart_data" style="display: none;">{{ chart_data_monthly|safe }}</p>
+                                    <div class="row" id="chart_loader">
+                                        <div class="com-md-6">
+                                            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div> &nbsp;
+                                            <strong>Loading......</strong>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="info-box">
+                                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><a href="{{all_data.total_teachers}}">Teachers</a></span>
+                                            <span class="info-box-number"> {{all_data.total_teachers}}   </span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="info-box">
+                                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><a href="{% url 'academic:subject_view' %}">Subjects</a></span>
+                                            <span class="info-box-number">{{all_data.total_subject}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="info-box">
+                                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><a href="{% url 'academic:classes_view' %}">Classes</a></span>
+                                            <span class="info-box-number">{{all_data.total_class}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <div class="info-box">
+                                        <span class="info-box-icon bg-aqua"><i class="fa fa-envelope-o"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><a href="{% url 'academic:routine_view' %}">Routines</a></span>
+                                            <span class="info-box-number">{{all_data.total_routine}}</span>
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                </div>
+                                
+                                
+
+
+
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card text-white card-stats statistic-box bg-darks mb-4">
+                                            <div class="card-header card-header-danger bg-darks card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="text-white typcn typcn-chart-area"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold ">Current Month Fee</p>
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Rs.<small> {{ fee_data.current_month_total_fee.current_month_total_fee }}  </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-resize-full text-white mr-2"></i>
+                                                    <a href="{% url 'fee:fee_received' date=fee_data.current_month_redirect %}" class="warning-link text-white">Total Fee Received in {{fee_data.current_month}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card text-white card-stats statistic-box bg-darks mb-4">
+                                            <div class="card-header card-header-danger bg-darks card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon  d-flex align-items-center justify-content-center">
+                                                    <i class="text-white typcn typcn-chart-bar-outline"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold ">CURRENT YEAR</p>
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Rs.<small> {{ fee_data.current_year_total_fee.current_year_total_fee }} </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-resize-full text-white mr-2"></i>
+                                                    <a href="{% url 'fee:fee_received' date=fee_data.current_year %}" class="warning-link text-white">Total Fee Received in {{fee_data.current_year}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card text-white card-stats statistic-box mb-4 bg-darks ">
+                                            <div class="card-header bg-darks card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="text-white typcn typcn-credit-card"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold ">Current Month</p>
+                                            
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Rs.<small> {{ fee_data.current_month_total_salary.monthly_salary }} </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-resize-full text-white mr-2"></i>
+                                                    <a href=" {% url 'payroll:salary_monthly_detail' date=fee_data.current_month_redirect %} " class="warning-link text-white">Salary Released in {{fee_data.current_month}}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card text-white card-stats statistic-box bg-darks  mb-4">
+                                            <div class=" bg-darks card-header card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="text-white typcn typcn-credit-card"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold ">Current Year</p>
+                                            
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Rs.<small> {{ fee_data.fee_data.current_year_total_salary.yearly_salary }} </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-resize-full mr-2"></i>
+                                                    <a href="#" class="warning-link text-white">Released Salary of {{fee_data.current_year}} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card text-white card-stats statistic-box mb-4 bg-darks ">
+                                            <div class="card-header bg-darks  card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="glyphicon text-white glyphicon-user"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold">Admission in a year</p>
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Total: <small> {{ chart_data_yearly.students_yearly }} </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-ok text-white mr-2"></i>
+                                                    <a href="#" class="text-white">Total Student in {{current_year}} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card card-stats statistic-box mb-4 bg-darks">
+                                            <div class=" text-white card-header bg-darks card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="glyphicon text-white glyphicon-align-left"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold">Present in a year</p>
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Total: <small> {{ chart_data_yearly.present_yearly }} </small>                                         
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon glyphicon-ok text-white mr-2"></i>
+                                                    <a href="#" class="text-white">Total Present in {{current_year}} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card card-stats statistic-box mb-4 bg-darks">
+                                            <div class="text-white card-header bg-darks card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="glyphicon text-white glyphicon-align-right"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold">Absent in a year</p>
+                                            
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Total: <small> {{ chart_data_yearly.absent_yearly }} </small>                                            
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-ok text-white mr-2"></i>
+                                                    <a href="#" class="text-white">Total Absent in {{current_year}} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="card card-stats statistic-box mb-4 bg-darks text-white">
+                                            <div class="card-header bg-darks text-white card-header-danger card-header-icon position-relative border-0 text-right px-3 py-0">
+                                                <div class="card-icon d-flex align-items-center justify-content-center">
+                                                    <i class="glyphicon text-white glyphicon-warning-sign"></i>
+                                                </div>
+                                                <p class="card-category text-uppercase fs-10 font-weight-bold">Dropout i a year</p>
+                                            
+                                                <h3 class="card-title fs-18 font-weight-bold">
+                                                    Total: <small> {{ chart_data_yearly.absent_yearly }} </small>                                          
+                                                </h3>
+                                            </div>
+                                            <div class="card-footer p-3">
+                                                <div class="stats">
+                                                    <i class="glyphicon text-white glyphicon-ok text-white mr-2"></i>
+                                                    <a href="#" class="text-white"> Total Drop out in {{current_year}} </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+
+                                <div class="card-body">
+                                    <div id="multipleValue"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+
+
+{% endblock %}
+
+{% block js %}
+
+        <!-- Third Party Scripts(used by this page)-->
+        <script src="{% static 'assets/plugins/amcharts4/core.js' %}"></script>
+        <script src="{% static 'assets/plugins/amcharts4/charts.js' %}"></script>
+        <script src="{% static 'assets/plugins/amcharts4/plugins/wordCloud.js' %}"></script>
+        <script src="{% static 'assets/plugins/amcharts4/themes/animated.js' %}"></script>
+        <!--Page Active Scripts(used by this page)-->
+        <script src="{% static 'assets/plugins/amcharts4/student.active.js' %}"></script>
+        <!--Page Scripts(used by all page)-->
+        <script src="{% static 'assets/dist/js/sidebar.js' %}"></script>
+{% endblock %}

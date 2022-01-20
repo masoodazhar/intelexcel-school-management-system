@@ -1,0 +1,34 @@
+{% extends 'master.html' %}
+
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Leaves</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form action="" method="post">{% csrf_token %}
+                                    <p>Are you sure you want to delete "{{ object }}"?</p>
+                                    <input type="submit" value="Confirm"  class="btn btn-primary"  />
+                                </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

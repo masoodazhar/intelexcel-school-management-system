@@ -1,0 +1,61 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block course %}
+active
+{% endblock %}
+{% block body %}
+		<!-- page-title-area-start -->
+		<div class="page-title-area ptb-190 bg-opacity" style="background-image:url({% static 'frontend/img/bg/21.jpg' %}); padding: 90px 0;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-title-text">
+							<h2> Offered Courses</h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- page-title-area-end -->
+		<!-- courses-area-start -->
+		<div class="courses-area pt-130 pb-100">
+			<div class="container">
+				<div class="row d-felx">
+					{% for course in cources %}
+						<div class="col-md-4 col-sm-6">
+							<div class="courses-wrapper mb-80">
+								<div class="courses-img">
+									<a href="#"><img src="{{course.image.url}}" alt="" />
+										<span> Full Courses </span>
+									</a>
+								</div>
+								<div class="courses-content">
+									<h4><a href="#">{{course.name}}</a></h4>
+									<p>{{course.description}}</p>
+									<a href="#">apply now</a>
+								</div>
+							</div>
+						</div>
+						{% empty %}
+					</div></div>
+						<h1 style="text-align: center; padding: 40px; text-transform: uppercase; background: coral; margin: 0;"> No Course Offered </h1>
+					{% endfor %}
+				</div>
+				<!-- <div class="row">
+					<div class="col-md-12">
+						<div class="paginations mt-40">
+							<ul>
+								<li><a href="#"> &lt;&lt; </a></li>
+								<li><a href="#">1</a></li>
+								<li class="active"><a href="#">2</a></li>
+								<li><a href="#">...</a></li>
+								<li><a href="#">28</a></li>
+								<li><a href="#"> &gt;&gt; </a></li>
+							</ul>
+						</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<!-- courses-area-end -->
+		{% endblock %}

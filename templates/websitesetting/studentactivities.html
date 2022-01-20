@@ -1,0 +1,63 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'websitesetting/website_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Student Activities List</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          
+                            <div class="card-body">
+                               
+                                <div class="table-responsive my-4">
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>S-No</th>
+                                              <th>Image</th>
+                                              <th>Name</th>
+                                              <th>Detail</th>
+                                              <th>Action</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for slide in studentsactivities %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td> <img src="{{slide.image.url}}" width="100" class="thumbnail" alt=""> </td>
+                                                <td> {{slide.name}} </td>
+                                                <td> {{slide.description}} </td>
+                                                <td>
+                                                    <a href="{% url 'studentactivities_update' pk=slide.pk %}">Update</a> 
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                      </tbody>
+
+                                  </table>
+                              </div>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

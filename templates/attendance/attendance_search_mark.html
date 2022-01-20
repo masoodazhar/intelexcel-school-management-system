@@ -1,0 +1,171 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'student/student_nav.html' %}
+{% endblock %}
+
+        {% block css %}
+        <style>
+            .subjects-marked{
+               /* width: 30px !important; */
+                left: 0;
+                display: inline-table;
+            }
+        </style>
+        {% endblock %}
+
+        {% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Mark Attendance</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                               
+                                <form name="search" action="{% url 'student:attendance_search' %}" method="POST">
+                                    {% csrf_token %}
+                                   <div class="row">
+                                       <div class="col-md-3">{{ form.date|as_crispy_field }}</div>
+                                       <div class="col-md-3">{{ form.classes|as_crispy_field }}</div>
+                                       <div class="col-md-3">{{ form.section|as_crispy_field }}</div>
+                                       <div class="col-md-3"> 
+                                            <div class="form-group">
+                                                <label for="" class=" requiredField">
+                                                    <span class="asteriskField">&nbsp;</span>
+                                                </label>   
+                                                <div>
+                                                    <button name="search" type="submit" class="btn btn-primary"><i class="3d_rotation"></i> Search</button>
+                                                </div>
+                                            </div>
+                                       </div>
+                                       
+                                   </div>
+                                   
+                                   
+                                </form>
+                                <hr class="bg-dark">
+                                 <form name="mark" method="POST" action="{% url 'student:attendance_mark' %}" novalidate class="form-inline">
+                                    {% csrf_token %}
+                                    <span style="display: none;">{{ form.date|as_crispy_field }}</span>
+                                   
+                                    <div class="table-responsive my-4">
+                                        <table id="datatables" class="table display table-bordered table-striped table-hover">
+                                            <thead>                                                
+                                                <tr>
+                                                    <th width="5%">#</th>
+                                                    <th width="5%">Status</th>
+                                                    <th width="10%">Reg:</th>
+                                                    <th width="5%">Name</th>
+                                                    <!-- <th width="5%">Section</th> -->
+                                                    <th width="60%">Subjects</th>
+                                                    <!-- <th width="10%">Class</th> -->
+                                                    <th width="5%">Attendance</th>
+                                                    <th width="10%">Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                             
+                                                {% for data in set_student_with_attendance %}
+    
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                   
+                                                    <td>
+                                                        <span style="display: none;">
+                                                            {{ data.forms_details.registration }}
+                                                            {{ data.forms_details.student_id }}
+                                                            {{ data.forms_details.section }}
+                                                            {{ data.forms_details.classes }}
+                                                           </span>
+                                                        {% if data.status == 'Marked'%}
+                                                        <span class="badge badge-success">{{data.status}}</span>
+                                                        {% else %}
+                                                        <span class="badge badge-danger">{{data.status}}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ data.registration }}</td>
+                                                    <td>{{ data.student_id }}</td>
+                                                    <td>
+                                                        
+                                                        {% for subject in data.subjects %}
+                                                            <div class="subjects-marked">
+                                                                <div class="checkbox checkbox-primary">
+                                                                    <input id="checkbox{{forloop.parentloop.counter}}{{forloop.counter}}" type="checkbox" name="subjects{{forloop.parentloop.counter}}" value="{{subject.pk}}" {{subject.check}} style="display: none;">
+                                                                    <label for="checkbox{{forloop.parentloop.counter}}{{forloop.counter}}">{{subject.subject_name}}</label>
+                                                                </div>    
+                                                            </div>                                         
+                                                        {% endfor %}
+                                                         <!-- {% for subject in data.forms_details.subjects %}
+                                                         {{subject}}
+                                                         <input type="checkbox" name="subjects" value=""> 
+                                                         {% endfor %} -->
+                                                    </td>
+                                                    <td>{{ data.forms_details.attendance_selection }}</td>
+                                                    <td>{{ data.forms_details.remarks }}</td>   
+                                                </tr>
+        
+                                                {% endfor %}
+      
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th width="5%">#</th>
+                                                    <th width="10%">Status</th>
+                                                    <th width="10%">Reg:</th>
+                                                    <th width="10%">Name</th>
+                                                    <th width="10%">Section</th>
+                                                    <th width="10%">Class</th>
+                                                    <th width="10%">Attendance</th>
+                                                    <th width="20%">Remarks</th>
+                                                </tr>
+                                            </tfoot>
+      
+                                        </table>
+                                    </div> 
+                                        <input type="submit" class="btn btn-primary" value="Save Data">
+                                </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#id_classes').change(function(){
+            var url = "{% url 'academic:get_section_by_class' %}";
+       
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {class_name:$(this).children('option:selected').val()},
+                success:function(data){
+                    console.log(data)
+                    array = []
+                    $.each(data.data, function(data, item){
+                        array.push('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                    $('#id_section').html(array);
+                }
+
+            });
+        });
+    });
+</script>
+{% endblock %}

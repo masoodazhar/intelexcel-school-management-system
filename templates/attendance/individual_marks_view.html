@@ -1,0 +1,518 @@
+
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'student/student_nav.html' %}
+{% endblock %}
+{% block css %}
+<style>
+    .image-size{
+        width: 120px;
+        height: 120px;
+        align-self: center;
+    }
+    .attendance_table tr{
+        font-size: 9px;
+    }
+    .attendance_table td{
+        padding: 4px;
+    }
+    .attendance_table th{
+        padding: 5px;
+    }
+    .routine-class>p{
+        margin: 0;
+    }
+    .col-md-3.routine-class {
+    border: solid 1px;
+    margin: 2px;
+    /* background: radial-gradient(white, #92d992); */
+    padding: 4px !important;
+}
+.table-marks{
+    padding: 30px 20px 20px 20px;
+    background: #000a00;
+    border-radius: 10px;
+}
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="body-content">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card" style="width: 18rem;">
+                        <img src="{{admission.photo.url}}" class="card-img-top
+                            rounded-circle img-thumbnail image-size" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title align-center">{{ admission.name_of_student }} <code><small> {% if admission.gender == 'Male' %} So {% else %} Do {% endif %}</small></code> {{admission.father_name}} </h5>
+                            <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                        </div>
+                       
+                        
+                    </div>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Registration: </b>{{admission.admission_registration }}</li>
+                        <li class="list-group-item"><b>Roll No: </b>
+                            {{admission.id}}</li>
+                        <li class="list-group-item"> <b>Class: </b>
+                            {{admission.admission_class}} </li>
+                        <li class="list-group-item"> <b>Section: </b>
+                            {{admission.admission_section}} </li>
+                    </ul>
+                </div>
+            </div> 
+
+            <div class="table-responsive">
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="nav nav-pills mb-3" id="pills-tab"
+                            role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link {% if not tab %} active show {% endif %}" id="profile-tab"
+                                    data-toggle="pill" href="#profile"
+                                    role="tab" aria-controls="profile"
+                                    aria-selected="true">Profile</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                            <a class="nav-link" id="parent-tab" data-toggle="pill" href="#parent" role="tab" aria-controls="parent" aria-selected="false">Parents</a>
+                        </li> -->
+                            <li class="nav-item">
+                                <a class="nav-link" id="routine-tab"
+                                    data-toggle="pill" href="#routine"
+                                    role="tab" aria-controls="routine"
+                                    aria-selected="false">Routine</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="attendance-tab"
+                                    data-toggle="pill" href="#attendance"
+                                    role="tab" aria-controls="attendance"
+                                    aria-selected="false">Attendance</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="mark-tab"
+                                    data-toggle="pill" href="#mark"
+                                    role="tab" aria-controls="mark"
+                                    aria-selected="false">Marks</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="invoice-tab"
+                                    data-toggle="pill" href="#invoice"
+                                    role="tab" aria-controls="invoice"
+                                    aria-selected="false">Invoice</a>
+                            </li> -->
+                            <li class="nav-item {% if tab %} active show {% endif %}">
+                                <a class="nav-link" id="payment-tab"
+                                    data-toggle="pill" href="#payment"
+                                    role="tab" aria-controls="payment"
+                                    aria-selected="false">Payments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="document-tab"
+                                    data-toggle="pill" href="#document"
+                                    role="tab" aria-controls="document"
+                                    aria-selected="false">Document</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade {% if not tab %} active show {% endif %} "
+                                id="profile" role="tabpanel"
+                                aria-labelledby="profile-tab">
+                                <table class="table table-light
+                                    table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Admission Date</b></td>
+                                            <td> {{ admission.admission_date}}
+                                            </td>
+                                            <td> <b>Class</b> </td>
+                                            <td> {{ admission.admission_class}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Admission Section</b></td>
+                                            <td> {{ admission.admission_section}}
+                                            </td>
+                                            <td> <b>Registration</b> </td>
+                                            <td> {{ admission.admission_registration}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Name</b></td>
+                                            <td> {{ admission.name_of_student}}
+                                            </td>
+                                            <td><b> Father Name </b> </td>
+                                            <td> {{ admission.father_name}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>father cnic</b></td>
+                                            <td> {{ admission.father_cnic}}
+                                            </td>
+                                            <td><b> CAST </b> </td>
+                                            <td> {{ admission.cast}} </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>father Profession</b></td>
+                                            <td> {{ admission.father_profession}}
+                                            </td>
+                                            <td><b> Date Of Birth </b> </td>
+                                            <td> {{ admission.date_of_birth}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Contact</b></td>
+                                            <td> {{ admission.contact}}
+                                            </td>
+                                            <td><b> Address </b> </td>
+                                            <td> {{ admission.address}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>gender</b></td>
+                                            <td >{{admission.gender}} </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="3"> </td>
+                                            <td><a href="#" class="btn
+                                                    btn-primary"> <i
+                                                        class="typcn
+                                                        typcn-printer mr-2"></i>
+                                                    Print the Detail</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="parent" role="tabpanel" aria-labelledby="parent-tab">
+                           parent Aute sunt incididunt amet commodo est sint nisi deserunt pariatur do. Aliquip ex eiusmod voluptate exercitation cillum id incididunt elit sunt. Qui minim sit magna Lorem id et dolore velit Lorem amet exercitation duis deserunt. Anim id labore elit adipisicing ut in id occaecat pariatur ut ullamco ea tempor duis.
+                        </div> -->
+                            <div class="tab-pane fade" id="routine"
+                                role="tabpanel"
+                                aria-labelledby="routine-tab">
+                                <table class="table table-light
+                                    table-bordered">
+
+                                    <tbody>
+                                        
+                                        {% for routine in routines %}
+                                        <tr>
+                                            <td style="width: 10%;">
+                                                <b>{{routine.days}} </b>
+                                            </td>
+                                            <td style="width: 90%;">
+                                                <div class="row">
+                                                    {% if routine.routine %}
+                                                    {% for route in routine.routine %}
+                                                    <div class="col-md-2 mx-2 routine-class alert alert-success">
+                                                        <p><b>Class:</b>
+                                                            {{route.class_name}}
+                                                        </p>
+                                                        <p><b>Teacher</b>:
+                                                            {{route.teacher_name}}</p>
+                                                        <p><b>Subjects:</b>
+                                                            {{route.subject_name}}</p>
+                                                        <p><b>Timing:</b>
+                                                            {{route.start_time}}
+                                                            to
+                                                            {{route.end_time}}
+                                                        </p>
+                                                    </div>
+                                                    {% endfor %}
+                                                    {% else %}
+                                                    <p>No Routine Defined</p>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+                                       
+                                        
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="attendance"
+                                role="tabpanel"
+                                aria-labelledby="attendance-tab">
+
+
+                                <div class="tab-pane active" id="attendance">
+                                    <h4>Bangla</h4> <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="studentDIV mCustomScrollbar _mCS_3 mCS_no_scrollbar">
+                                                <div id="mCSB_3" class="mCustomScrollBox mCS-light mCSB_horizontal mCSB_inside" tabindex="0" style="max-height:none;">
+                                                    <div id="mCSB_3_container" class="mCSB_container mCS_x_hidden mCS_no_scrollbar_x"  style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr">
+                                                        <table class="attendance_table table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th><th>31</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                             
+                                                                {% for year in student_attendance_detail_year %}                                                    
+                                                                    <tr>
+                                                                    {% for month in year.month %}
+                                                                        <!-- {{ month.monthly }} -->
+                                                                    
+                                                                        {% for day in month.daily %}
+                                                                    
+                                                                            {% if day.day == '01' %}
+                                                                                </tr><tr>
+                                                                                    <td> {{ day.month }} <br>
+                                                                                        <td 
+                                                                                        {% if day.attendance == 'P' %}
+                                                                                        class="bg-success"
+                                                                                        {% elif day.attendance == 'A' %}
+                                                                                            class="bg-danger"
+                                                                                        {% elif day.attendance == 'L' %}
+                                                                                            class="bg-info"
+                                                                                        {% elif day.attendance == 'L-I' %}
+                                                                                            class="bg-warning"
+                                                                                        {% elif day.attendance == 'O' %}
+                                                                                            class="bg-secondary"
+                                                                                        {% elif day.attendance == 'H' %}
+                                                                                            class="bg-primary"
+                                                                                        {% else %}
+                                                                                            class="bg-light"
+                                                                                        {% endif %}
+                                                                                        
+                                                                                        > 
+                                                                                        {{ day.attendance }} 
+                                                                                    </td>    
+                                                                            {% else %}
+                                                                            <td 
+                                                                            {% if day.attendance == 'P' %}
+                                                                            class="bg-success"
+                                                                            {% elif day.attendance == 'A' %}
+                                                                                class="bg-danger"
+                                                                            {% elif day.attendance == 'L' %}
+                                                                                class="bg-info"
+                                                                            {% elif day.attendance == 'L-I' %}
+                                                                                class="bg-warning"
+                                                                            {% elif day.attendance == 'O' %}
+                                                                                class="bg-secondary"
+                                                                            {% elif day.attendance == 'H' %}
+                                                                                class="bg-primary"
+                                                                            {% else %}
+                                                                                class="bg-light"
+                                                                            {% endif %}
+                                                                            
+                                                                            > 
+                                                                            {{ day.attendance }} 
+                                                                        </td>    
+                                                                            {% endif %} 
+                                            
+                                                                        {% endfor %}
+                                                                    
+                                                                            
+                                                                     {% endfor %}
+                                                                    </tr>
+                                                                {% endfor %}
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                                    </div><div
+                                                        id="mCSB_3_scrollbar_horizontal"
+                                                        class="mCSB_scrollTools
+                                                        mCSB_3_scrollbar
+                                                        mCS-light
+                                                        mCSB_scrollTools_horizontal"
+                                                        style="display:
+                                                        none;"><div
+                                                            class="mCSB_draggerContainer"><div
+                                                                id="mCSB_3_dragger_horizontal"
+                                                                class="mCSB_dragger"
+                                                                style="position:
+                                                                absolute;
+                                                                min-width:
+                                                                30px;
+                                                                display:
+                                                                block;
+                                                                width: 0px;
+                                                                left: 0px;"><div
+                                                                    class="mCSB_dragger_bar"></div></div><div
+                                                                class="mCSB_draggerRail"></div></div></div></div></div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <p class="totalattendanceCount">
+                                                Total Holiday:{{total_holidays}},
+                                                Total Leave:{{total_leave}},
+                                                <span style="{% if total_holidays > 250 %} color: green {% endif %}">Total Present:{{total_present}},</span>
+                                                <span style="{% if total_late > 20 %} color: red {% endif %}">Total Late:{{total_late}},</span>
+                                                <span style="{% if total_absent > 20 %} color: red {% endif %}">Total Absent:{{total_absent}} </span>
+                                            
+                                                </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="tab-pane fade" id="mark"
+                                role="tabpanel" aria-labelledby="mark-tab">
+                                
+                            
+                                  <div class="table-marks"> 
+                                    <table class="table table-light">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Test Type</th>
+                                                <th>Total Marks Required</th>
+                                                <th>Mark Assigned</th>
+                                                <th>Subject</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                                {% for data in get_calculated_marks %}
+                                                    <tr>
+                                                        <td>{{data.exam_type}}</td>
+                                                        <td>{{data.total_marks}}</td>
+                                                        <td>{{data.assigned_marks}}</td>
+                                                        <td>{{data.subject}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                          
+                                        </tbody>
+                                       
+                                    </table>
+                                  </div>
+                                
+                                <table class="table table-light">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Subject</th>
+                                            <th>Exam</th>
+                                            <th>Attendance</th> 
+                                            <th>Class Test</th>
+                                            <th>Assignment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       {% for subject in collect_std_marks_subs %}
+                                      
+                                       <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td><b>{{subject.subject_name}}</b></td>
+                                            <td> <b>{{subject.examin}} </b> out of ({{subject.examout}})</td>
+                                            <td> <b>{{subject.attendancin}}</b> out of ({{subject.attendanceout}})</td>
+                                            <td> <b>{{subject.classtestin}}</b> out of ({{subject.classtestout}})</td>
+                                            <td> <b>{{subject.assignmentin}}</b> out of ({{subject.assignmentout}})</td>
+                                        </tr>
+                                        
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- <div class="tab-pane fade" id="invoice"
+                                role="tabpanel"
+                                aria-labelledby="invoice-tab">
+                               
+                                <h1>individual_marks_view.html</h1>
+                            </div> -->
+                            <div class="tab-pane fade {% if tab %} active show {% endif %}" id="payment"
+                                role="tabpanel"
+                                aria-labelledby="payment-tab">
+                               <div class="row">
+                                   <div class="col-md-6">
+                                    <h4>Admission Date: {{payment_system_info.payment_system_info.admission_date}}  </h4>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <form action="" method="get" class="form-inline">
+                                            <input type="submit" value="Search" class="btn btn-primary">
+                                            <select name="year" id="search_fee_year" class="select2-selection__rendered">
+                                                {% for year in range %}
+                                                <option value="{{year}}">{{year}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <input type="hidden" name="tab" value="ok">
+                                       </form>
+                                   </div>
+                               </div>
+                               <code><strong>Note: </strong> Total Payable will be multiply on monthly paid fee,   <strong>Note: </strong> Total Paid amount will be multiply on paid amount on monthly bases</code>
+                               <table class="table table-light">
+                                   <thead class="thead-light">
+                                       <tr>
+                                           <th>Fee Month</th>
+                                           <th>Status</th>
+                                           <th>Payable</th>
+                                           <th>Paid</th>
+                                           <th>Total Payable</th>
+                                           <th>Total Paid</th>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       {% for voucherdata in payment_system_info.payment_system %}
+                                       <tr>
+                                            <td> {{voucherdata.fee_month}} </td>
+                                            <td> {{voucherdata.status}} </td>
+                                            <td> {{voucherdata.tution_fee_payable}} </td>
+                                            <td> {{voucherdata.tution_fee_paid}} </td>
+                                            <td> {{voucherdata.total_payable}} </td>
+                                            <td> {{voucherdata.total_paid}} </td>
+                                            
+                                       </tr>
+                                       {% endfor %}
+                                   </tbody>
+                               </table>
+
+                            </div>
+                            <div class="tab-pane fade" id="document"
+                                role="tabpanel"
+                                aria-labelledby="document-tab">
+                                document Nulla ut duis ipsum nisi elit
+                                fugiat commodo sunt reprehenderit laborum
+                                veniam eu veniam. Eiusmod minim exercitation
+                                fugiat irure ex labore incididunt do fugiat
+                                commodo aliquip sit id deserunt
+                                reprehenderit aliquip nostrud. Amet ex
+                                cupidatat excepteur aute veniam incididunt
+                                mollit cupidatat esse irure officia elit do
+                                ipsum ullamco Lorem.
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-sm-8">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
+                        to make a type specimen book.</p>
+                    <p><strong>Thank you very much for choosing us. It was a pleasure to have worked with you.</strong></p>
+                    <img src="assets/dist/img/credit/AM_mc_vs_ms_ae_UK.png" class="img-responsive" alt="">
+
+                </div>
+                <div class="col-sm-4">
+                    <ul class="list-unstyled text-right">
+                        <li>
+                            <strong>Sub - Total amount:</strong> $9265 </li>
+                        <li>
+                            <strong>Discount:</strong> 12.9% </li>
+                        <li>
+                            <strong>VAT:</strong> ----- </li>
+                        <li>
+                            <strong>Grand Total:</strong> $12489 </li>
+                    </ul>
+                </div>
+            </div> -->
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-info mr-2" onclick="myFunction()"><span class="fa fa-print"></span></button>
+            <button type="button" class="btn btn-success"><i class="fa fa-dollar"></i> Make A Payment</button>
+        </div>
+    </div>
+</div>
+<!--/.body content-->
+{% endblock %}

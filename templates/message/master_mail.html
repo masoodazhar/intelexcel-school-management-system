@@ -1,0 +1,79 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'message/message_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                       <div class="mailbox">
+                        <div class="mailbox-header d-flex align-items-center justify-content-between">
+                            <div class="inbox-avatar-wrap d-flex align-items-center">
+                                <!-- <img src="assets/dist/img/avatar-1.jpg" class="inbox-avatar border-green" alt=""> -->
+                                <div class="inbox-avatar-text d-none d-sm-inline-block ml-3">
+                                    <h6 class="avatar-name mb-0"><i class="glyphicon glyphicon-envelope"></i></h6>
+                                    <span>Mailbox</span>
+                                 </div>
+                                
+                            </div>
+                            {% for message in  messages %}
+                            <div class="alert alert-success"> {{ message }} </div>
+                            {% endfor %}
+                            <div class="inbox-toolbar btn-toolbar">
+                                <div class="btn-group">
+                                    <a href="{% url 'message:send_mail' %}" class="btn btn-success"><i class="far fa-edit"></i></a>
+                                </div>
+                                <div class="btn-group ml-1">
+                                    <a href="#" class="btn btn-secondary"><span class="fa fa-reply"></span></a>
+                                    <a href="#" class=" btn btn-secondary d-none d-lg-block"><span class="fa fa-reply-all"></span></a>
+                                    <a href="#" class="btn btn-secondary"><span class="fa fa-share"></span></a>
+                                </div>
+                                <div class="btn-group ml-1 d-none d-lg-flex">
+                                    <button type="button" class="text-center btn btn-danger"><span class="fa fa-exclamation"></span></button>
+                                    <button type="button" class="btn btn-danger"><span class="fa fa-trash"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mailbox-body">
+                            <div class="row m-0">
+                                <div class="col-lg-3 p-0 inbox-nav d-none d-lg-block">
+                                    <div class="mailbox-sideber">
+                                        <div class="profile-usermenu">
+                                            <h6 class="fs-13 font-weight-bold">Mailbox</h6>
+                                            <ul class="nav flex-column">
+                                                <!-- <li class="nav-item active"><a href="#"><i class="fa fa-inbox"></i>Inbox <small class="label pull-right bg-green">61</small></a></li> -->
+                                                <li class="nav-item active"><a href="{% url 'message:email_view' %}"><i class="typcn typcn-mail"></i>Send Mail</a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-star-outline"></i>Starred</a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-trash"></i>Tresh </a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-attachment-outline"></i>Attachments</a></li>
+                                            </ul>
+                                            <h6 class="fs-13 font-weight-bold">Other</h6>
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-warning"></i>Spam</a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-clipboard"></i>Draft</a></li>
+                                            </ul>
+                                            <h6 class="fs-13 font-weight-bold">Tags</h6>
+                                            <ul class="nav flex-column">
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-media-record text-success"></i>#sometag</a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-media-record text-warning"></i>#anothertag</a></li>
+                                                <li class="nav-item"><a href="#"><i class="typcn typcn-media-record text-danger"></i>#anotheronetag</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                {% block mailbody %}
+                                {% endblock %}
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                    </div><!--/.body content-->
+{% endblock %}

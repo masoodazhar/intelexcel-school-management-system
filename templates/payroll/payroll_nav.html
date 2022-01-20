@@ -1,0 +1,95 @@
+
+<style>
+    .nav-design {
+        border-right: 1px solid;
+        padding: 7px 12px 5px 12px;
+        background: #1c1f22;
+        /* margin: 5px; */
+    }
+    .nav-design a{
+        color: white;
+    }
+    .nav-design:hover{
+        background: brown;
+        color: brown;
+        content: 'sdasdsd';
+    }
+  
+    .selected-nav{
+        background: brown;
+        color: brown;
+    }
+  
+</style>
+
+<nav aria-label="breadcrumb" class="col-12 order-sm-last ">
+    <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0" style="width: 100%; background-color: #1c1f22 !important; padding: 0;">
+   
+        {% url 'payroll:main_payroll' as main_payroll %}
+        {% url 'payroll:salary_monthly_detail' as salary_monthly_detail %}
+        <li class="nav-design {% if request.path == main_payroll or request.path == salary_monthly_detail  %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:main_payroll'%}">
+                All (home)
+            </a>
+        </li>
+        {% url 'payroll:schedual_view' as schedual_view %}
+        <li class="nav-design {% if request.path == schedual_view %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:schedual_view' %}">
+                Time Schedule
+            </a>
+        </li>
+        {% url 'payroll:position_view' as position_view %}
+        <li class="nav-design {% if request.path == position_view %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:position_view'%}">
+                Positions
+            </a>         
+        </li>
+        {% url 'payroll:teacher_view' as teacher_view %}
+        <li class="nav-design {% if request.path == teacher_view %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:teacher_view' %}">
+                Employee
+            </a>
+        </li>
+        {% url 'payroll:leave_view' as leave_view %}
+        <li class="nav-design {% if request.path == leave_view %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:leave_view'%}">
+                Leave
+            </a>
+        </li>
+        {% url 'payroll:employee_attendance' as employee_attendance %}
+        <li class="nav-design {% if request.path == employee_attendance %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:employee_attendance'%}">
+                Attendance
+            </a>
+        </li>
+        {% url 'payroll:advancesalary_view' as advancesalary_view %}
+        <li class="nav-design {% if request.path == advancesalary_view %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:advancesalary_view'%}">
+                Advance Salary
+            </a>
+        </li>
+        {% url 'payroll:salary' as salary %}
+        <li class="nav-design {% if request.path == salary %} selected-nav {% endif %}">
+            <a href="{% url 'payroll:salary'%}">
+                Employee Salary
+            </a>
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,292 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+
+        {% block css %}
+        <style>
+
+        </style>
+        {% endblock %}
+        {% block innerlinks %}
+        {% include 'fee/fee_nav.html' %}
+        {% endblock %}
+        {% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Pay Generated Challan</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" novalidate class="form">
+                                    {% csrf_token %} 
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            {{ search_form.classes|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{ search_form.admission_section|as_crispy_field }}
+                                        </div>                                        
+                                        <div class="col-md-3">
+                                            {{ search_form.fee_month|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="hidden" id="id_year" name="year" value="2020">
+                                            <!-- {{ search_form.year|as_crispy_field }} -->
+                                        </div>                                       
+                                    </div>
+                                    <hr>
+                                    <!-- <div class="row">
+                                        <div class="col-md-3">
+                                            {{ search_form.issue_date|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{ search_form.due_date|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-3" style="display: none;">
+                                            {{ search_form.year|as_crispy_field }}
+                                        </div>
+                                        
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="submit" value="Search" class="btn btn-primary" name="">
+                                        </div>
+                                        
+                                    </div>
+                                  
+                                  
+                            </form> 
+                            <br>
+                                <hr>
+                                <form method="POST" action="{% url 'fee:pay_challan' %}" >
+                               <div style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ search_form.classes|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ search_form.admission_section|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ search_form.year|as_crispy_field }}
+                                    </div>
+                                   
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        {{ search_form.issue_date|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ search_form.due_date|as_crispy_field }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ search_form.fee_month|as_crispy_field }}
+                                      
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ search_form.year|as_crispy_field }}
+                                    </div>
+                                    
+                                </div>
+                               </div>
+                              
+                                <div class="table-responsive my-4">
+                                    {% csrf_token %}
+                                    <table id="example" class="table display table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <input id="checkbox1" class="check_all" type="checkbox" checked="" style="    margin: 47px 10px;
+                                                position: absolute;
+                                                z-index: 10001;
+                                                width: 30px;
+                                                height: 30px;">
+                                                <th width="5%"> 
+                                                   &nbsp;
+                                                    <!-- <div class="checkbox checkbox-info checkbox-circle">
+                                                        <input id="checkbox1" type="checkbox" checked="">
+                                                        <label for="checkbox1">All</label>
+                                                    </div> -->
+                                                </th>
+                                                <th width="20%">Status</th>
+                                                <th width="16%">Challan No</th>
+                                                <th width="10%">Reg:</th>
+                                                <th width="15%">Tution Fee:</th>
+                                                <th width="20%">Name</th>
+                                                <th width="20%">Father Name</th>
+                                                <th width="10%">Section</th>
+                                                <th width="10%">Class</th>
+                                                <th> ACTION </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for students in all_student %}
+                                                <tr>
+                                                    <td>  
+                                                        <input type="checkbox" value="{{students.pk}}-{{forloop.counter|add:'-1'}}" checked name="pk" class="check_one" style="width: 15px;">
+                                                        <!-- <input type="checkbox" value="" checked name="index" class="check_one" style="width: 15px;"> -->
+                                                        <!-- <div class="checkbox checkbox-info checkbox-circle" sty>
+                                                            <input id="checkbox" type="checkbox" checked="">
+                                                            <label for="checkbox">{{ forloop.counter }}</label>
+                                                        </div>     -->
+                                                    </td>
+                                                    <td> {% if students.status == 0 %} <span class="btn btn-danger">Not Paid</span> {% else %} <span class="btn btn-success">Rs. {{students.status}} </span>  {% endif %}  </td>
+                                                    <td> <input type="hidden" value="{{students.challan_number}}" name="challan_number"> {{students.challan_number}} </td>
+                                                    <td> <input type="hidden" name="reg_number" value="{{students.reg_number}}"> {{students.reg_number}}</td>
+                                                    <td> <input type="hidden" name="monthly_tution_fee" value="{{students.monthly_tution_fee}}"> {{students.monthly_tution_fee}}</td>
+                                                    <td> <input type="hidden" name="name_of_student" value="{{students.student_name}}">{{students.student_name}} </td>
+                                                    <td> <input type="hidden" name="father_name" value="{{students.father_name}}">{{students.father_name}} </td>
+                                                    <td> <input type="hidden" name="section" value="{{students.section}}">{{students.section}} </td>
+                                                    <td> <input type="hidden" name="class" value="{{students.class_name}}">{{students.class_name}} </td>
+                                                    <td>
+                                                    <a href="#"> Print </a>
+                                                    </td>
+                                                </tr>
+                                         {% endfor %}
+                                            
+                                        <tfoot>
+                                            <tr>
+                                                <th width="5%"> 
+                                                   All
+                                                </th>
+                                                <th width="20%">Status</th>
+                                                <th width="15%">Challan No</th>
+                                                <th width="15%">Reg:</th>
+                                                <th width="15%">Tution Fee:</th>
+                                                <th width="20%">Name</th>
+                                                <th width="20%">Father Name</th>
+                                                <th width="10%">Section</th>
+                                                <th width="10%">Class</th>
+                                                <th> ACTION </th>
+                                           
+                                            </tr>
+                                        </tfoot>
+                                        </tbody>
+  
+                                    </table>
+                                  
+                               
+                                </div> 
+                                <input type="submit" value="Pay Now" class="btn btn-success">
+                            </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+{% block js %}
+<script>
+
+    $(document).ready(function(){
+        $('#id_fee_month').change(function(){
+            var year = $(this).val().split('-')[0]
+            $('#id_year').val(year)
+            
+        })
+    });
+
+    var date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth();
+    day = date.getDay();
+
+    var current_date = date.getFullYear()+'-'+add_zero((date.getMonth()+1))+'-'+add_zero(date.getDate());
+    
+    
+    // document.getElementById("id_due_date").defaultValue = year+'-'+add_zero(month)+'-'+add_zero(day);
+    
+
+    function add_zero(data){
+
+        if(data<10){
+            data = '0'+data;
+            return data;
+        }else{
+            return data;
+        }
+    }
+ 
+    $(document).ready(function(){
+        $('#generate_form').submit(function(){
+            return confirm("Are sure to generate Vouchers. \nBecause this operation is not avalaible for second time. can be use once for each month. kindly check and confirm. than genanrate")
+        })
+
+        $('.issue_date').val(current_date);
+        $('.due_date').val(current_date);
+        $('.fee_month').val(current_date);
+
+        $('.issue_date').change(function(){
+            $('.issue_date').val($(this).val());
+        });
+
+        $('.due_date').change(function(){
+            $('.due_date').val($(this).val());
+        });
+
+        $('.fee_month').change(function(){
+            $('.fee_month').val($(this).val());
+        });
+
+        $('.year').change(function(){
+            $('.year').val($(this).val());
+        });
+
+        $('.year').change(function(){
+            $('.year').val($(this).val());
+        });
+
+        $('.classes').change(function(){
+            $('.classes').val($(this).val());
+        });
+
+        $('.admission_section').change(function(){
+            $('.admission_section').val($(this).val());
+        });
+
+        $('.check_all').change(function(){
+            if($(this).is(':checked')){
+                $('.check_one').prop('checked',true)
+            }else{
+                $('.check_one').prop('checked',false)
+            }
+        });
+
+    });
+   // GETTNG SECTION ON CLASS CHANGE
+   $(document).ready(function(){
+        $('#id_classes').change(function(){
+            var url = "{% url 'academic:get_section_by_class' %}";
+       
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {class_name:$(this).children('option:selected').val()},
+                success:function(data){
+                    console.log(data)
+                    array = []
+                    $.each(data.data, function(data, item){
+                        array.push('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                    $('#id_admission_section').html(array);
+                }
+
+            });
+        });
+    });
+
+</script>
+{% endblock %}

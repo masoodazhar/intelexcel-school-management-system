@@ -1,0 +1,69 @@
+
+
+<style>
+    .nav-design {
+        border-right: 1px solid;
+        padding: 7px 12px 5px 12px;
+        background: #1c1f22;
+        /* margin: 5px; */
+    }
+    .nav-design a{
+        color: white;
+    }
+    .nav-design:hover{
+        background: brown;
+        color: brown;
+        content: 'sdasdsd';
+    }
+  
+    .selected-nav{
+        background: brown;
+        color: brown;
+    }
+  
+</style>
+
+<nav aria-label="breadcrumb" class="col-12 order-sm-last ">
+    <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0" style="width: 100%; background-color: #1c1f22 !important; padding: 0;">
+        {% url 'academic:academic_main' as academic_main %}
+        <li class="nav-design {% if request.path == academic_main %} selected-nav {% endif %}">
+            <a href="{% url 'academic:academic_main' %}">
+                All (Academic)
+            </a>
+        </li>
+        {% url 'student:create_section' as create_section %}
+        <li class="nav-design {% if request.path == create_section %} selected-nav {% endif %}">
+            <a href="{% url 'student:create_section' %}">
+                Sections
+            </a>
+        </li>
+        {% url 'academic:classes_view' as classes_view %}
+        <li class="nav-design {% if request.path == classes_view %} selected-nav {% endif %}">
+            <a href="{% url 'academic:classes_view' %}">
+                Classes
+            </a>
+        </li>
+        {% url 'academic:subject_view' as subject_view %}
+        <li class="nav-design {% if request.path == subject_view %} selected-nav {% endif %}">
+            <a href="{% url 'academic:subject_view' %}">
+            </span>Subjects
+        </a>
+        </li>
+        {% url 'academic:room_view' as room_view %}
+        <li class="nav-design {% if request.path == room_view %} selected-nav {% endif %}">
+            <a href="{% url 'academic:room_view'%}" >
+                Rooms
+            </a>
+        </li>
+        {% url 'academic:routine_view' as routine_view %}
+        <li class="nav-design {% if request.path == routine_view %} selected-nav {% endif %}">
+            <a href="{% url 'academic:routine_view' %}" class="">
+               Routines
+            </a>
+        </li>
+        
+        
+    </ol>
+</nav>
+
+

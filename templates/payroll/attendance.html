@@ -1,0 +1,124 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block innerlinks %}
+{% include 'payroll/payroll_nav.html' %}
+{% endblock %}
+{% block css %}
+<style>
+    table.table td h2.table-avatar {
+    align-items: center;
+    display: inline-flex;
+    font-size: inherit;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.avatar.avatar-xs {
+    width: 24px;
+    height: 24px;
+}
+.avatar {
+    background-color: #aaa;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-weight: 500;
+    height: 38px;
+    line-height: 38px;
+    margin: 0 10px 0 0;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    vertical-align: middle;
+    width: 38px;
+    position: relative;
+    white-space: nowrap;
+}
+.avatar > img {
+    border-radius: 50%;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 28px;
+}
+</style>
+{% endblock %}
+
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Project status</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'payroll:employee_attendance_add' %}" class="btn btn-primary">Mark Attednace</a>
+                                 <hr>
+                                 <div class="table-responsive">
+                                    <table class="table table-striped custom-table table-nowrap mb-0 table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Employee</th>
+                                               {% for head in heading %}
+                                            <th style="{% if head.status == 's' %} background:red {% endif %} "> {{head.day}} </th>
+                                               {% endfor %}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for employee in all_emp_att %}
+                                            <tr>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        <a class="avatar avatar-xs" href="#"><img alt="" src="{{employee.employee.photo.url}}"></a>
+                                                        <a href="{% url 'payroll:employee_induigual' pk=employee.employee.pk %}"> {{employee.employee}} </a>
+                                                    </h2>
+                                                </td>
+                                                {% for attendance in employee.atte_status %}
+                                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info">
+                                                    {% if attendance.sun_or_other_day == 'a' %}
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    {% elif attendance.sun_or_other_day == 's' %}
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    {% elif attendance.sun_or_other_day == 'p' %}
+                                                        <a href="{% url 'payroll:employee_attendance_update' pk=attendance.pk %}"><i class="fa fa-check text-success"></i></a>
+                                                    {% elif attendance.sun_or_other_day == 'h' %}
+                                                        h
+                                                    {% elif attendance.sun_or_other_day == 'l' %}
+                                                        L
+                                                    {% else  %}
+                                                        N
+                                                    {% endif %}
+                                                </a></td>
+
+                                                {% endfor %}
+                                            </tr>
+                                            {% endfor %}
+                                              
+                                                
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

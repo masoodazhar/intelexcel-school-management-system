@@ -1,0 +1,80 @@
+
+<style>
+    .nav-design {
+        border-right: 1px solid;
+        padding: 7px 12px 5px 12px;
+        background: #1c1f22;
+        /* margin: 5px; */
+    }
+    .nav-design a{
+        color: white;
+    }
+    .nav-design:hover{
+        background: brown;
+        color: brown;
+        content: 'sdasdsd';
+    }
+  
+    .selected-nav{
+        background: brown;
+        color: brown;
+    }
+
+</style>
+<nav aria-label="breadcrumb" class="col-12 order-sm-last ">
+    <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0" style="width: 100%; background-color: #1c1f22 !important; padding: 0;">
+        {% url 'sliders_create' as sliders_create %}
+        <li class="nav-design {% if request.path == sliders_create %} selected-nav {% endif %}">
+            <a href="{{sliders_create}}"  >
+                Sliders
+             </a>
+        </li>{% url 'studentactivities_create' as studentactivities_create %}
+        <li class="nav-design {% if request.path == studentactivities_create %} selected-nav {% endif %}">
+            <a href="{% url 'studentactivities_create' %}" >
+                Student Activities
+            </a>
+        </li>
+        
+        {% url 'summeryactivity_list' as summeryactivity_list %}
+        <li class="nav-design {% if request.path == summeryactivity_list %} selected-nav {% endif %}">
+            <a href="{% url 'summeryactivity_list' %}" >
+                School Summery
+            </a>        
+        </li>
+        
+        {% url 'extracources_create' as extracources_create %}
+        <li class="nav-design {% if request.path == extracources_create %} selected-nav {% endif %}">
+            <a href="{% url 'extracources_create' %}" >
+                Extra Cources
+            </a>
+        </li>
+        {% url 'events_create' as events_create %}
+        <li class="nav-design {% if request.path == events_create %} selected-nav {% endif %}">
+            <a href="{% url 'events_create' %}" >
+                Manage Events
+            </a>
+        </li>
+        {% url 'registernow_list' as registernow_list %}
+        <li class="nav-design {% if request.path == registernow_list %} selected-nav {% endif %}">
+            <a href="{% url 'registernow_list' %}" >
+                Register Now
+            </a>
+            
+        </li>
+        {% url 'register_request' as register_request %}
+        <li class="nav-design {% if request.path == register_request %} selected-nav {% endif %}">
+            <a href="{% url 'register_request' %}">
+                Registeration Requests
+            </a>
+            
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+
+
+

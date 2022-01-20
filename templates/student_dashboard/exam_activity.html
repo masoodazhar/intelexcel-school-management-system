@@ -1,0 +1,57 @@
+{% extends 'student_dashboard/base.html' %}
+{% block body %}
+<section class="content">
+
+  <!-- Default box -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">Upcoming And Declared Exams Detail</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                title="Collapse">
+          <i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+      <table class="table table-light">
+        <thead class="thead-light">
+          <tr>
+            <th> Suject Name </th>
+            <th> Exam Type </th>
+            <th> Total Marks </th>
+            <th> Open Date </th>
+            <th style="color: red"> Due date </th>
+            <th> Detail File </th>
+            <th> Assigned Marks </th>
+            <th> Remarks </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for exam_detal in exam_lists %}
+              <tr>
+                <td> {{exam_detal.subject_name}} </td>
+                <td> {{exam_detal.exam_type}} </td>
+                <td> {{exam_detal.marks}} </td>
+                <td> {{exam_detal.open_date}} </td>
+                <td style="color: red"> {{exam_detal.due_date}} </td>
+                <td> {% if exam_detal.exam_detail_file == 'nofile.pdf' %} No File {% else %} <a href="{{exam_detal.exam_detail_file}}" download>Download File</a> {% endif %} </td>
+                <td> {{exam_detal.marks_status}} </td>
+                <td> {{exam_detal.remarks}} </td>
+              </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <code> Be Ready For Upcoming Exams, Test and Assignments, Before Dure Date </code>
+    </div>
+    <!-- /.box-footer-->
+  </div>
+  <!-- /.box -->
+
+</section>
+{% endblock %}

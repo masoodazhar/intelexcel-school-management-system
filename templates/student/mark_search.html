@@ -1,0 +1,403 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'student/student_nav.html' %}
+{% endblock %}
+{% block css %}
+<style>
+   span.input-marks-style > input {
+        width: 70px;
+    }
+    .popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Assign marks to studemt </h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="card-body">                              
+                              <form action="{% url 'student:student_mark' %}"   method="POST">
+                                  {% csrf_token %}
+                                  <div class="row">
+                                      <div class="col-md-3">
+                                          {{form.class_name|as_crispy_field}}
+                                      </div>
+                                      <div class="col-md-3">
+                                          {{form.section|as_crispy_field}}
+                                      </div>
+                                      <div class="col-md-3">
+                                          {{form.subject|as_crispy_field}}
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div id="div_id_subject" class="form-group">
+        
+                                            <label for="id_subject" class=" requiredField">
+                                                &nbsp;<span class="asteriskField">&nbsp;</span>
+                                            </label>
+                                            <div class="">
+                                                 <input type="submit" value="Search" class="btn btn-primary btn-labeled">
+                                             </div>
+                                         </div>
+                                      </div>
+                                  </div>
+                              </form>
+                               
+                              <form action="{% url 'student:student_mark_add' %}" method="POST">
+                                  {% csrf_token %}
+                                <span style="display:none;">  {{form}}</span>
+                                <div class="table-responsive my-4">
+                                    <table id="example" class="table display table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr class="main_exam_total">
+                                                <th> S-No </th>
+                                                <th> Student Name </th>
+                                                <th> <p style="display: none;">{% if mark_ditribution_header.exam %} {{mark_ditribution_header.exam}} {% else %}0{% endif %}</p> Exam Out Of (<span class="exam_total">{% if mark_ditribution_header.exam %} {{mark_ditribution_header.exam}} {% else %}0{% endif %}</span>)</th>
+                                                <th> <p style="display: none;">{% if mark_ditribution_header.attendance %} {{mark_ditribution_header.attendance}} {% else %}0{% endif %}</p> Attendance Out Of (<span class="attendance_total">{% if mark_ditribution_header.attendance %} {{mark_ditribution_header.attendance}} {% else %}0{% endif %}</span>)</th>
+                                                <th> <p style="display: none;">{% if mark_ditribution_header.class_test %} {{mark_ditribution_header.class_test}} {% else %}0{% endif %}</p> Class Test Out Of (<span class="class_test_total">{% if mark_ditribution_header.class_test %} {{mark_ditribution_header.class_test}} {% else %}0{% endif %}</span>)</th>
+                                                <th> <p style="display: none;">{% if mark_ditribution_header.assignment %} {{mark_ditribution_header.assignment}} {% else %}0{% endif %}</p> Assignment Out Of (<span class="assignment_total">{% if mark_ditribution_header.assignment %} {{mark_ditribution_header.assignment}} {% else %}0{% endif %}</span>)</th>
+                                                <th> Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                         {% for marks in collect_student_form_with_data %}
+                                                
+                                                 <tr>
+                                                    
+                                                    <td>
+                                                        <p style="display: none;" class="studentid">{{marks.studentID}}</p>
+                                                        <p style="display: none;" class="class_name">{{class_name}}</p>
+                                                        <p style="display: none;" class="subject_id">{{subjectid}}</p>
+                                                         {{forloop.counter}} 
+                                                    </td>
+                                                    <td> {{ marks.student_name }} 
+                                                        <span style="display: none;"> {{ marks.forms.student_name }}   </span>
+                                                    </td>
+                                                    <td> 
+                                                        <span style="display: inline-block;" class="input-marks-style">
+                                                            {{ marks.forms.exam }} 
+                                                            <div class="popup" onclick="myFunction()">
+                                                                <button onclick="event.preventDefault()" index="2" class="mypopup btn btn-success">+</button>
+                                                                <span class="popuptext" id="myPopup">Fetch From Calculated if avalaible. other wise you have calculate marks once.</span>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                    <td> 
+                                                        <span style="display: inline-block;" class="">
+                                                            {{ marks.forms.attendance }} 
+                                                            <!-- <div class="popup" onclick="myFunction()">
+                                                                <button onclick="event.preventDefault()" index="3" class="mypopup btn btn-success">+</button>
+                                                                <span class="popuptext" id="myPopup">Fetch From Calculated if avalaible. other wise you have calculate marks once.</span>
+                                                            </div> -->
+                                                        </span> 
+                                                    </td>
+                                                    <td> 
+                                                        <span style="display: inline-block;" class="input-marks-style">
+                                                            {{ marks.forms.class_test }}                                                        
+                                                            <div class="popup" onclick="myFunction()">
+                                                                <button onclick="event.preventDefault()" index="4" class="mypopup btn btn-success">+</button>
+                                                                <span class="popuptext" id="myPopup">Fetch From Calculated if avalaible. other wise you have calculate marks once.</span>
+                                                            </div>
+                                                        </span> 
+                                                    </td>
+                                                    <td> 
+                                                        <span style="display: inline-block;" class="input-marks-style">
+                                                            {{ marks.forms.assignment }}
+                                                            <div class="popup" onclick="myFunction()">
+                                                                <button onclick="event.preventDefault()" index="5" class="mypopup btn btn-success">+</button>
+                                                                <span class="popuptext" id="myPopup">Fetch From Calculated if avalaible. other wise you have calculate marks once.</span>
+                                                            </div>     
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <a href="" class=" mb-2 mr-1 calculate-marks" pk="{{marks.studentID}}" classname="{{class_name}}"  subject="{{subjectid}}">
+                                                            <span class=""><i class="glyphicon glyphicon-edit"></i></span>
+                                                            Calculate Marks
+                                                        </a> |
+                                                        <a href="{% url 'student:view_individual_marks' student_name=marks.studentID %}" class="mb-2 mr-1">
+                                                            <span class=""><i class="glyphicon glyphicon-eye-open"></i></span>View
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                         {% endfor %}
+                                        </tbody>
+  
+                                    </table>
+                                </div>
+                                <input type="submit" class="btn btn-primary">
+                              </form>
+                              <span id="get_subject_by_class" style="display:none;">{% url 'student:get_subject_by_class' %}</span>
+                              <span id="get_section_by_class" style="display: none;">{% url 'academic:get_section_by_class' %}</span>
+                              
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+{% block js %}
+
+<script>
+      
+        function myFunction() {
+        
+        }
+
+     $(document).ready(function(){
+        $('.mypopup').mouseover(function(){
+            var element = $(this);
+            element.next('span').css("visibility","visible")
+
+            setTimeout(function(){
+                element.next('span').css("visibility","hidden")
+            }, 2000)
+
+        });
+       
+        $('.mypopup').click(function(){
+            var element = $(this);
+            var index = parseInt(element.attr('index'))
+
+            var exam_type = '';
+
+            if(index==2){
+                exam_type = 'midterm';
+            }else if(index==4){
+                exam_type = 'classtest'
+            }else if(index==5){
+                exam_type = 'assignment'
+            }
+            student_id = element.parents('tr').children('td').eq(0).children('.studentid').text()
+            class_id = element.parents('tr').children('td').eq(0).children('.class_name').text()
+            subject_id = element.parents('tr').children('td').eq(0).children('.subject_id').text()
+           
+            var total_head_marks = $('.main_exam_total').children('th').eq(index).children('p').text(); // getting value from head and th total marks
+           
+            $.ajax({
+                url: "{% url 'student:getting_marks_from_calculated' %}",
+                method: "GET",
+                data: {exam_type: exam_type, student_id:student_id, class_name:class_id, total_head_marks:total_head_marks, subject_id:subject_id},
+                success: function(data){
+                
+                   element.parent('div').prev('input').val(data.data);
+                   
+                }
+            });
+        })
+
+        var myWindow;
+        $('.calculate-marks').click(function(e){
+            var element = $(this);
+            var pk = element.attr('pk');
+            var classname = element.attr('classname');
+            var subject = element.attr('subject');
+            // alert(classname)
+            e.preventDefault();
+            var url = "/student/get_class_asignments/"+pk+"/class/"+classname+"/subject/"+subject+"";
+            
+            myWindow = window.open(url, "", "width=700,height=800");
+            myWindow.addEventListener('beforeunload', function (e){
+               
+                
+            // window.location.reload();   
+            // Cancel the event
+            // e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+            // Chrome requires returnValue to be set
+            // e.returnValue = '';
+            });
+        });
+       
+       
+   
+        $('#id_class_name').change(function(){
+            var url = $('#get_section_by_class').text();
+       
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {class_name:$(this).children('option:selected').val()},
+                success:function(data){
+                    console.log(data)
+                    array = []
+                    $.each(data.data, function(data, item){
+                        array.push('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                    $('#id_section').html(array);
+                }
+
+            });
+        });
+    });
+     $(document).ready(function(){
+        $('#id_class_name').change(function(){
+            var url = $('#get_subject_by_class').text();
+       
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {class_name:$(this).children('option:selected').val()},
+                success:function(data){
+                    array = []
+                    $.each(data.data, function(data, item){
+                        array.push('<option value="'+item.id+'">'+item.name+'</option>')
+                    })
+                    $('#id_subject').html(array);
+                }
+
+            });
+        });
+    });
+    $(document).ready(function(){
+        $('.class_exam').keyup(function(){
+           exam = $.trim($(this).val());
+           exam = parseInt(exam==''?0:exam)
+
+           exam_total = $.trim($('.exam_total').text());
+           exam_total = parseInt(exam_total==''?0:exam_total)
+
+           if(exam>exam_total){
+            $('.exam_total').parent().css('color','red');
+            $(this).val(0);
+           }else{
+            $('.exam_total').parent().css('color','black');
+           }
+
+        });
+        $('.class_attendance').keyup(function(){
+           attendance = $.trim($(this).val());
+           attendance = parseInt(attendance==''?0:attendance)
+           attendance_total = $.trim($('.attendance_total').text());
+           attendance_total = parseInt(attendance_total==''?0:attendance_total)
+
+           if(attendance>attendance_total){
+            $('.attendance_total').parent().css('color','red');
+            $(this).val(0);
+           }else{
+            $(this).parent().find('p').remove();
+            $('.attendance_total').parent().css('color','black');
+           }
+        });
+        $('.class_class_test').keyup(function(){
+           class_test = $.trim($(this).val());
+           class_test = parseInt(class_test==''?0:class_test)
+           class_test_total = $.trim($('.class_test_total').text());
+           class_test_total = parseInt(class_test_total==''?0:class_test_total)
+           
+           if(class_test>class_test_total){
+            $('.class_test_total').parent().css('color','red');
+            $(this).val(0);
+           }else{
+            $('.class_test_total').parent().css('color','black');
+           }
+        });
+        $('.class_assignment').keyup(function(){
+           assignment = $.trim($(this).val());
+           assignment = parseInt(assignment==''?0:assignment)
+           assignment_total = $.trim($('.assignment_total').text());
+           assignment_total = parseInt(assignment_total==''?0:assignment_total)
+
+           if(assignment>assignment_total){
+            $('.assignment_total').parent().css('color','red');
+            $(this).val(0);
+           }else{
+            $('.assignment_total').parent().css('color','black');
+           }
+        });
+        
+        $(".class_exam, .class_attendance, .class_class_test, .class_assignment").keypress(function(e){
+                //if the letter is not digit then display error and don't type anything
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){
+                    //display error message                    
+                    return false;
+                }
+        });
+
+    });
+</script>
+
+<script> 
+    window.addEventListener( 
+        "resize", getSizes, false); 
+
+    let out = document.querySelector(".output"); 
+
+    function getSizes() { 
+        let zoom = ((window.outerWidth - 10) 
+            / window.innerWidth) * 100; 
+              
+        out.textContent = zoom; 
+    } 
+</script>
+
+{% endblock %}

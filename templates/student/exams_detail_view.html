@@ -1,0 +1,206 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'student/student_nav.html' %}
+{% endblock %}
+
+{% block css %}
+<style>
+    .sent{
+    background-color: green;
+    color: cornsilk;
+    }
+    .not-sent{
+    background-color: brown;
+    color: cornsilk;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="body-content">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-12 col-xl-12">
+            <div class="header p-0 ml-0 mr-0 shadow-none">
+                <div class="header-body">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="header-pretitle fs-10 font-weight-bold text-muted text-uppercase mb-1">Exam</h6>
+                            <h1 class="header-title fs-25 font-weight-600">Exam Detail - send to students by email or sms</h1>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#!" class="btn btn-success-soft ml-2"><i class="typcn typcn-edit mr-1"></i>Edit</a>
+                            <a href="#!" class="btn btn-success ml-2"><i class="typcn typcn-printer mr-1"></i>Print Invoice </a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <!--/.End of header-->
+            <div class="card card-body p-5">
+                <!-- <div class="row">
+                    <div class="col text-right">
+                        <div class="badge badge-danger">Notify</div>
+                    </div>
+                </div>  -->
+                <div class="row">
+                    <div class="col text-center">
+                        <img src="{{schoolprofile.school_logo.url}}" style="width: 100px; height: 80px;" alt="..." class="img-fluid mb-4">
+                        <h4 class="mb-0 font-weight-bold">{{schoolprofile.school_name}}</h4>
+                        <p class="text-muted mb-5">{{schoolprofile.address}}</p>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-12 col-md-6">
+                        <h6 class="text-uppercase text-muted fs-12 font-weight-600">Invoiced from</h6>
+                        <p class="text-muted mb-4">
+                            <strong class="text-body fs-16">Twitter, Inc.</strong> <br>
+                            1355 Market Street, Suite 900 <br>
+                            San Francisco, CA 94103 <br>
+                            P: (123) 456-7890
+                        </p>
+                        <h6 class="text-uppercase text-muted fs-12 font-weight-600">Invoiced ID</h6>
+                        <p class="mb-4">INV-000567F7-00</p>
+                    </div>
+                    <div class="col-12 col-md-6 text-md-right">
+                        <h6 class="text-uppercase text-muted fs-12 font-weight-600">Invoiced to</h6>
+                        <p class="text-muted mb-4">
+                            <strong class="text-body fs-16">Twitter, Inc.</strong> <br>
+                            1355 Market Street, Suite 900 <br>
+                            San Francisco, CA 94103 <br>
+                            P: (123) 456-7890
+                        </p>
+                        <h6 class="text-uppercase text-muted fs-12 font-weight-600"> Due date</h6>
+                        <p class="mb-4"><time datetime="2018-04-23">Apr 23, 2018</time></p>
+                    </div>
+                </div>  -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="">
+                                            <strong> Exam name: </strong> <span> {{exams_detail.exams_name}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong> Class name: </strong> <span> {{exams_detail.class_name}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong> Subject Name: </strong> <span> {{exams_detail.subject_name}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong> Exam type: </strong> <span> {{exams_detail.exam_type}} </span>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="">
+                                            <strong> Marks: </strong> <span> {{exams_detail.marks}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong> Open Date: </strong> <span> {{exams_detail.open_date}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong> Due Date: </strong> <span> {{exams_detail.due_date}} </span>
+                                        </td>
+                                        <td class="">
+                                            <strong>Exam Details File: </strong> <span> {% if exams_detail.exam_detail_file == 'nofile.pdf' %} No File {% else %} <a href="{{exams_detail.exam_detail_file}}" download>Download File</a> {% endif %} </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Remarks About Exam: </strong> </td>
+                                        <td colspan="3"><span> {{exams_detail.remarks}} </span>  </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr class="my-2">
+                        <h6 class="text-uppercase font-weight-bold">Notify Students By Email or SMS </h6>
+                        <p class="text-muted mb-0">
+                           Select Students to send MSG or Email. Also can send one by one from action of students table
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <form action="{% url 'student:SendEmail_SaveData' %}" method="POST">
+                                {% csrf_token %}
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox"  class="check_all" name="" id="">
+                                            </th>
+                                            <th>Images</th>
+                                            <th>Student Name</th>
+                                            <th>Registration Number</th>
+                                            <th>Student Email</th>
+                                            <th>Father Email</th>
+                                            <th>Contact Number</th>
+                                            <th>Status</th>
+                                            <!-- <th>Action (Send)</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <input type="hidden" name="exam" value="{{exams_detail}}" id="">
+                                        <input type="hidden" name="module_holder" value="{{module_holder}}" id="">
+                                        <input type="hidden" name="subject" value="{{subject}}" id="">
+                                        {% for student in students %}
+                                        
+                                        <tr>
+                                            <td> <input type="checkbox" {% if student.status == 'sent' %} checked {% endif %} name="pk" value="{{student.pk}}" class="check_one"> </td>
+                                            <td> <img src="{{student.photo.url}}" width="50" alt=""> </td>
+                                            <td> {{student.name_of_student}} </td>
+                                            <td> {{student.admission_registration}} </td>
+                                            <td> {{student.Student_email_address}} </td>
+                                            <td> {{student.father_email_address}} </td>
+                                          
+                                            <td> {{student.contact}} </td>
+                                            <td class="{{student.status}}"> {{student.status|title}} </td>
+                                            <!-- <td>
+                                                <a href="">SMS</a>  |
+                                                <a href="">Email</a> 
+                                            </td> -->
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    
+                                </tbody>
+                            </table>
+
+                            <input type="submit" class="btn btn-primary" value="Send Email" >
+                            <input type="button" onclick="" class="btn btn-primary" value="Send SMS" >
+                        </form>
+                        </div>
+                       <!-- TODO -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!--/.body content-->
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+
+    $(document).ready(function(){
+     
+        $('.check_all').change(function(){
+            if($(this).is(':checked')){
+                $('.check_one').prop('checked',true)
+            }else{
+                $('.check_one').prop('checked',false)
+            }
+        });
+
+    });
+  
+</script>
+{% endblock %}

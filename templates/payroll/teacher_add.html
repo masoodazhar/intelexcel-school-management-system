@@ -1,0 +1,205 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'payroll/payroll_nav.html' %}
+{% endblock %}
+
+{% block css %}
+<style>
+     #div_id_gender form-check{
+        display: inline-block !important;
+    }
+
+    #div_id_time_schedual>label::after {
+            content: "+";
+            background: #389707;
+            width: 10px;
+            height: 10px;
+            margin: 10px;
+            padding: 1px 10px 1px 10px;
+            color: white;
+            cursor: pointer;
+            pointer-events: all;
+        }
+        #div_id_time_schedual>label::after {
+            content: "+";
+            background: #389707;
+            width: 10px;
+            height: 10px;
+            margin: 10px;
+            padding: 1px 10px 1px 10px;
+            color: white;
+            cursor: pointer;
+            pointer-events: all;
+        }
+</style>
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Project status</h6>
+                                    </div>
+                                    {% for message in messages %}
+                                        <div class="alert alert-success"></div>
+                                    {% endfor %}
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" action="{{teachercreateurl}}" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                   <div class="row">
+                                       <div class="col-md-2">
+                                        {{form.first_name|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.last_name|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.date_of_birth|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.religion|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.Phone|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.time_schedual|as_crispy_field}}
+                                       </div>
+                                     
+                                   </div>
+                                   <div class="row">
+                                        <div class="col-md-2">
+                                        {{form.gender|as_crispy_field}}
+                                       </div>
+                                        <div class="col-md-2">
+                                        {{form.date_of_join|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.photo|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.position|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-2">
+                                        {{form.designation|as_crispy_field}}
+                                       </div>
+                                      
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                        {{form.address|as_crispy_field}}
+                                       </div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-3">
+                                        {{form.username|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3">
+                                        {{form.password1|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3">
+                                        {{form.password2|as_crispy_field}}
+                                       </div>
+                                       <div class="col-md-3"></div>
+                                   </div>
+                                   <div class="row">
+                                       <div class="col-md-12">
+                                            <div style="overflow-x: scroll;">
+                                                <table class="table table-bordered">                                            
+                                                    <th>#</th>
+                                                    {% for head in header_sorted %}
+                                                        <th> <input type="checkbox" class="top_header" value="{{head}}"> <br>{{head}} </th>
+                                                    {% endfor %}                                                
+                                                    {% for cate in all_school_user_perm_list %}
+                                                        <tr>
+                                                            <td style="font-weight: bolder;"> <input type="checkbox" class="side_header" value="{{cate.head}}"> {{cate.head}} </td>
+                                                            {% for values in cate.values %}
+                                                                    <td> <input type="checkbox" name="perms" value="{{values.id}}" class="set_{{cate.head}} set_{{values.codename}}"> <br> {{values.codename}} </td>
+                                                            {% endfor %}    
+                                                        </tr>  
+                                                    {% endfor %}
+                                                </table>
+                                            </div>
+                                       </div>
+                                   </div>
+                                   <br>
+                                    <input type="submit" value="Save Data"  class="btn btn-primary" >
+                                </form>
+
+                                
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+
+                    <!-- ADDING SECTION -->
+                    <div class="md-modal md-effect-1" id="modal-2">
+                        <div class="md-content">
+                            
+                            <h4 class="font-weight-600 mb-0">Add New Time Schadule </h4>
+                           
+                            <div class="n-modal-body">
+                                <form method="POST" id="addSectionForm">
+                                    {% csrf_token %}
+                                    {{sectionform|crispy}}
+                                 <div class="row">
+                                     <div class="col-md-1">
+                                        <button type="submit" class="btn btn-primary"> Add </button>
+                                     </div>
+                                     <div class="col-md-3">
+                                        <button type="button" class="btn btn-danger md-close" id="close1">Close</button>
+
+                                     </div>
+                                 </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success md-trigger mb-2 mr-1" id="model_open_timeschedual" style="display: none;" data-modal="modal-2">Fade in &amp; Scale</button>
+                    
+{% endblock %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+
+        $("#div_id_time_schedual").children('label').click(function(){ 
+            $('#model_open_timeschedual').click();
+        });
+
+        $('.top_header').change(function(){
+            var top = $(this).val();
+            if($(this).is(':checked')){
+                $('.set_'+top+'').prop('checked','checked');
+            }else{
+                $('.set_'+top+'').prop('checked','');
+            }
+        });
+
+        $('.side_header').change(function(){
+            var top = $(this).val();
+            if($(this).is(':checked')){
+                $('.set_'+top+'').prop('checked','checked');
+            }else{
+                $('.set_'+top+'').prop('checked','');
+            }            
+        });
+    });
+</script>
+{% endblock %}

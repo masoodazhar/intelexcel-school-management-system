@@ -1,0 +1,563 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+   
+<style>
+.sidebar-nav ul li a i {
+    font-size: 12px !important;
+    line-height: 1 !important;
+}
+.btn-success {
+    color: #fff !important;
+    background-color: #1c1f22 !important;
+    border-color: #a52a2a !important;
+}
+.bg-darks {
+    background-color: #1c1f22 !important;
+}
+.btn-primary {
+    color: #fff !important;
+    background-color: #a52a2a !important;
+    border-color: #1c1f22 !important ;
+}
+</style>
+<!-- Mirrored from bhulua.thememinister.com/blank-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Oct 2019 12:00:55 GMT -->
+<head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Intelexcel School Management System">
+        <meta name="author" content="Bdtask">
+        <title>{% block title %} {% endblock %} Intelexcel School Management System.</title>
+        <!-- App favicon -->
+        <!-- <link rel="shortcut icon" href="{% static 'assets/dist/img/favicon.png'%}"> -->
+        <!--Global Styles(used by all pages)-->
+        <link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/metisMenu/metisMenu.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/fontawesome/css/all.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/typicons/src/typicons.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/themify-icons/themify-icons.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/glyphicons/glyphicons.css' %}" rel="stylesheet">
+        <!--Third party Styles(used by this page)-->
+        <link href="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+        <!--Start Your Custom Style Now-->
+        <link href="{% static 'assets/dist/css/style.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/modals/component.css'%}" rel="stylesheet">
+        <!--        JAVA SCRIPT DATA TABLES EDITING WITH MODULES-->
+        <link href="{% static 'assets/plugins/jsgrid/dist/jsgrid.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/jsgrid/dist/jsgrid-theme.min.css'%}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/jquery-ui-1.12.1/jquery-ui.css'%}" rel="stylesheet">
+    <link href="{% static 'assets/plugins/bootstrap4-toggle/css/bootstrap4-toggle.min.css' %}" rel="stylesheet">
+
+        <!--    SELECT BOXES-->
+
+        <link href="{% static 'assets/plugins/select2/dist/css/select2.min.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/select2-bootstrap4/dist/select2-bootstrap4.min.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/plugins/jquery.sumoselect/sumoselect.min.css' %}" rel="stylesheet">
+        <link href="{% static 'assets/dist/css/select.html' %}" rel="stylesheet" type="text/css"/>
+       <style>
+           .select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 0;
+    right: 0;
+    height: 36px;
+    width: 30px
+}
+
+.select2-container--default[dir=rtl] .select2-selection--single .select2-selection__arrow {
+    left: 0;
+    right: auto
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b,
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-width: 0;
+    font-family: themify;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    font-size: 12px;
+    margin-left: -7px;
+    margin-top: -7px
+}
+
+.select2-container--default[dir=rtl] .select2-selection--single .select2-selection__arrow b,
+.select2-container--default[dir=rtl].select2-container--open .select2-selection--single .select2-selection__arrow b {
+    margin-left: 7px
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b:before {
+    content: "\e64b"
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b:before {
+    content: "\e648"
+}
+
+.select2-container--default .select2-selection--single .select2-selection__clear {
+    margin-right: 8px;
+    border-width: 0;
+    font-family: themify;
+    speak: none;
+    font-variant: normal;
+    font-size: 18px;
+    color: #00044c;
+    margin-top: -2px
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #f1f3f6;
+    border: 1px solid #e4e5e7;
+    border-radius: 3px
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    font-family: themify
+}
+
+.select2-search--dropdown {
+    padding: 10px
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #e4e5e7
+}
+.mycard{
+        background: white;
+    padding: 10px;
+    margin: 0px 9px 0 8px;
+    border: solid 0px;
+    box-shadow: 3px 3px 5px #005106;
+}
+.myicon {
+        text-align: center;
+    font-size: 17px;
+    color: #f5700c;
+    margin: -10px;
+}
+.myicon i{
+    font-size: 34px;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+.btn-labeled-my{
+    padding: 18px;
+    width: 100%;
+}
+.btn-labeled-my span{
+    /* background: red; */
+    border: solid 1px;
+    margin: 0 -15px;
+    float: left;    
+    border-radius: 5px;
+}
+.form-control, select {
+    font-size: 14px;
+    border: 1px solid #e4e5e7;
+    height: calc(1.8em + .75rem + 2px);
+    border-radius: 0px !important;
+    height: 27px !important;
+    padding: 0px !important;
+}
+.table td, span{
+    font-size: 12px !important;
+}
+
+.md-modal{
+    border: solid 1px !important;
+    box-shadow: 0px 0px 50px 0px black !important;
+}
+
+       </style>
+        {% block css %}
+        
+        {% endblock %}
+    </head>
+    <body class="fixed">
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <p>Please wait...</p>
+            </div>
+        </div>
+        <!-- #END# Page Loader -->
+        <div class="wrapper">
+            <!-- Sidebar  -->
+            <nav class="sidebar sidebar-bunker">
+                <div class="sidebar-header">
+                    <!--<a href="index.html" class="logo"><span>bd</span>task</a>-->
+                    <a href="index.html" class="logo"><img src="{% static 'assets/dist/img/varified.png' %}" alt=""></a>
+                </div><!--/.sidebar header-->
+                <div class="profile-element d-flex align-items-center flex-shrink-0">
+                    <div class="avatar online">
+                        <img src="{{ request.session.school_logo }}" class="img-fluid rounded-circle" alt="">
+                    </div>
+                    <div class="profile-text">
+                        <h6 class="m-0"> {{user}} </h6>
+                        <span><a href="#" class="__cf_email__" data-cfemail="c4a1bca5a9b4a8a184a3a9a5ada8eaa7aba9">[email&#160;protected]</a></span>
+                    </div>
+                </div><!--/.profile element-->
+                <form class="search sidebar-form" action="#" method="get" >
+                    <div class="search__inner">
+                        <input type="text" class="search__text" placeholder="Search...">
+                        <i class="typcn typcn-zoom-outline search__helper" data-sa-action="search-close"></i>
+                    </div>
+                </form><!--/.search-->
+                <div class="sidebar-body">
+                    <nav class="sidebar-nav">
+                        <ul class="metismenu">
+                            {% url 'home:main_page' as main_page %}
+                            <li class="nav-label">Main Menu</li>
+                            <li class="{% if request.path == main_page %} mm-active {% endif %}">
+                                <a href="{% url 'home:main_page'%}">
+                                    <i class="glyphicon  glyphicon-home mr-2"></i>
+                                     Dashboard 
+                                </a>
+                            </li>
+                            {% url 'academic:academic_main' as academic_main %}
+                            <li class="{% if 'academic' in request.path or 'student/crea' in request.path %} mm-active {% endif %}">
+                                <a href="{% url 'academic:academic_main'%}">
+                                    <i class="glyphicon glyphicon-folder-close mr-2"></i>
+                                    Academics Details
+                                </a>
+                              
+                                
+                           </li>
+                           {% url 'student:student_view' as student_view %}
+                            <li class="{% if 'student' in request.path and 'student/crea' not in request.path %} mm-active {% endif %}">
+                               
+                               
+                                    <a href="{% url 'student:student_view' %}">
+                                        <i class="glyphicon glyphicon-user mr-2"></i>
+                                        Students Details
+                                    </a>
+                              
+                            </li>
+                            {% url 'fee:fee_main' as fee_main %}
+                            <li class="{% if 'fee' in request.path or 'account' in request.path %} mm-active {% endif %}">
+                               
+                                    <a href="{% url 'fee:fee_main'%}">
+                                        <i class="glyphicon glyphicon-credit-card mr-2"></i>
+                                        Students Account
+                                    </a>
+                              
+                            </li>
+                            {% url 'message:message_email' as message_email %}
+                            <li class="{% if request.path == message_email %} mm-active {% endif %}">
+                               
+                                    <a href="{% url 'message:message_email'%}">
+                                        <i class="glyphicon glyphicon-comment mr-2"></i>
+                                        Messages 
+                                    </a>
+                              
+                            </li>
+                            {% url 'payroll:main_payroll' as main_payroll %}
+                            <li class="{% if 'payroll' in request.path  %} mm-active {% endif %}">
+                               
+                                    <a href="{% url 'payroll:main_payroll'%}">
+                                        <i class="glyphicon glyphicon-stats mr-2"></i>
+                                        Payroll 
+                                    </a>
+                              
+                            </li>
+                            {% url 'websitesettinghome' as websitesettinghome %}
+                            {% url 'about_list' as about_list %}
+                            {% url 'gallery_create' as gallery_create %}
+                            {% url 'noticeboard_create' as noticeboard_create %}
+                            <li class="{% if request.path == websitesettinghome or request.path == about_list or request.path == gallery_create or request.path == noticeboard_create  %} mm-active {% endif %}">
+                               
+                                    <a href="#" class="has-arrow material-ripple" aria-expanded=" class="
+                                        {% if request.path == websitesettinghome or request.path == about_list or request.path == gallery_create or request.path == noticeboard_create %} 
+                                        true 
+                                        {% endif %}
+                                        ">
+                                        <i class="glyphicon glyphicon-cog mr-2"></i>
+                                        Web Settings 
+                                    </a>
+                                    <ul class="nav-second-level">
+                                        <li class="{% if request.path == websitesettinghome %}mm-active{% endif %}"><a href="{% url 'websitesettinghome'%}">Home Page</a></li>
+                                        <li class="{% if request.path == about_list %}mm-active{% endif %}"><a href="{% url 'about_list' %}">About</a></li>                                       
+                                        <li class="{% if request.path == gallery_create %}mm-active{% endif %}"><a href="{% url 'gallery_create' %}">Gallery</a></li>
+                                        <li class="{% if request.path == noticeboard_create %}mm-active{% endif %}"><a href="{% url 'noticeboard_create' %}">Notice Board</a></li>
+                                      
+                                    </ul>
+                              
+                            </li>
+                            <!-- <li>
+                                <a class="has-arrow material-ripple" href="#">
+                                    <i class="typcn typcn-chart-pie-outline mr-2"></i>
+                                    Accounts
+                                </a>
+                                <ul class="nav-second-level">
+                                    <li><a href="{% url 'account:feetype_view'%}">Fee Type</a></li>
+                                    <li><a href="{% url 'account:invoice_view'%}">Invoice</a></li>
+                                    <li><a href="">Payment History</a></li>
+                                    <li><a href="{% url 'account:expense_view'%}">Expense</a></li>
+                                    <li><a href="{% url 'account:income_view'%}">Income</a></li>
+                                    <li><a href="">Global Payment</a></li>
+                                </ul>
+                            </li> -->
+                        </ul>
+                    </nav>
+                </div><!-- sidebar-body -->
+            </nav>
+            <!-- Page Content  -->
+            <div class="content-wrapper">
+                <div class="main-content">
+                    <nav class="navbar-custom-menu navbar navbar-expand-lg m-0">
+                        <div class="sidebar-toggle-icon" id="sidebarCollapse">
+                            sidebar toggle<span></span>
+                        </div><!--/.sidebar toggle icon-->
+                        <div class="col-md-6">
+                            <div class="row">
+                               {% for message in messages %}
+                                    {% if forloop.counter < 2 %}
+                                         <div class="col-md-12 offset-3">
+                                            <div class="alert alert-{{message.tags}} alert-dismissible">
+                                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                <strong>{{message.tags}}!</strong> {{ message }}
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                               {% endfor %}
+                            </div>
+                        </div>
+                            
+                     
+                        <div class="d-flex flex-grow-1">
+                            <ul class="navbar-nav flex-row align-items-center ml-auto">
+                               
+                                <li class="nav-item dropdown quick-actions">
+                                    
+                                    <!--
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        <i class="typcn typcn-th-large-outline"></i>
+                                    </a> -->
+                                    <div class="dropdown-menu dropdown-menu-right" >
+                                        <div class="nav-grid-row row">
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-cog-outline d-block"></i>
+                                                <span>Settings</span>
+                                            </a>
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-group-outline d-block"></i>
+                                                <span>Users</span>
+                                            </a>
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-puzzle-outline d-block"></i>
+                                                <span>Components</span>
+                                            </a>
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-chart-bar-outline d-block"></i>
+                                                <span>Profits</span>
+                                            </a>
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-time d-block"></i>
+                                                <span>New Event</span>
+                                            </a>
+                                            <a href="#" class="icon-menu-item col-4">
+                                                <i class="typcn typcn-edit d-block"></i>
+                                                <span>Tasks</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li><!--/.dropdown-->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'message:message_email' %}"><i class="typcn typcn-messages"></i></a>
+                                </li>
+                                <li class="nav-item dropdown notification">
+                                    <a class="nav-link dropdown-toggle badge-dot" href="#" data-toggle="dropdown">
+                                        <i class="typcn typcn-bell"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <h6 class="notification-title">Notifications</h6>
+                                        <p class="notification-text">You have 2 unread notification</p>
+                                        <div class="notification-list">
+                                            <div class="media new">
+                                                <div class="img-user"><img src="{% static 'assets/dist/img/avatar.png' %}" alt=""></div>
+                                                <div class="media-body">
+                                                    <h6>Congratulate <strong>Socrates Itumay</strong> for work anniversaries</h6>
+                                                    <span>Mar 15 12:32pm</span>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <div class="media new">
+                                                <div class="img-user online"><img src="{% static 'assets/dist/img/avatar2.png' %}" alt=""></div>
+                                                <div class="media-body">
+                                                    <h6><strong>Joyce Chua</strong> just created a new blog post</h6>
+                                                    <span>Mar 13 04:16am</span>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <div class="media">
+                                                <div class="img-user"><img src="{% static 'assets/dist/img/avatar3.png' %}" alt=""></div>
+                                                <div class="media-body">
+                                                    <h6><strong>Althea Cabardo</strong> just created a new blog post</h6>
+                                                    <span>Mar 13 02:56am</span>
+                                                </div>
+                                            </div><!--/.media -->
+                                            <div class="media">
+                                                <div class="img-user"><img src="{% static 'assets/dist/img/avatar4.png' %}" alt=""></div>
+                                                <div class="media-body">
+                                                    <h6><strong>Adrian Monino</strong> added new comment on your photo</h6>
+                                                    <span>Mar 12 10:40pm</span>
+                                                </div>
+                                            </div><!--/.media -->
+                                        </div><!--/.notification -->
+                                        <div class="dropdown-footer"><a href="#">View All Notifications</a></div>
+                                    </div><!--/.dropdown-menu -->
+                                </li><!--/.dropdown-->
+                                <li class="nav-item dropdown user-menu">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        <!--<img src="{% static 'assets/dist/img/user2-160x160.png' %}" alt="">-->
+                                        <i class="typcn typcn-user-add-outline"></i>
+                                    </a>
+                                    
+                                    <div class="dropdown-menu dropdown-menu-right" >
+                                        <div class="dropdown-header d-sm-none">
+                                            <a href="#" class="header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                                        </div>
+                                        <!-- <div class="user-header">
+                                            <div class="img-user">
+                                                <img src="{% static 'assets/dist/img/avatar-1.jpg' %}%" alt="">
+                                            </div>
+                                            <h6> {{user.username}} {{school_profile_id}}</h6>
+                                            <span><a href="cdn-cgi/l/email-protection.html" class="__cf_email__" data-cfemail="6f0a170e021f030a2f08020e0603410c0002">[email&#160;protected]</a></span>
+                                        </div> -->
+                                        <!-- user-header -->
+                                        {% if request.session.school_user_id %}
+                                        <a href="{% url 'home:school_profile' pk=request.session.school_user_id %}" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
+                                        {% endif %}
+                                        <a href="#" class="dropdown-item"> <i class="typcn typcn-arrow-shuffle"></i> Activity Logs </a>
+                                        <a href="#" class="dropdown-item"> <i class="typcn typcn-cog-outline"></i> Account Settings </a>
+                                        <a href="{% url 'home:logout' %}" class="dropdown-item"> <i class="typcn typcn-key-outline"></i> Sign Out</a>
+                                    </div><!--/.dropdown-menu -->
+                                </li>
+                            </ul><!--/.navbar nav-->
+                            <div class="nav-clock">
+                                <div class="time">
+                                    <span class="time-hours"></span>
+                                    <span class="time-min"></span>
+                                    <span class="time-sec"></span>
+                                </div>
+                            </div><!-- nav-clock -->
+                        </div>
+                    </nav><!--/.navbar-->
+                    <!--Content Header (Page header)-->
+                    <div class="content-header row align-items-center m-0">
+                        <!-- <nav aria-label="breadcrumb" class="col-sm-3 order-sm-last mb-3 mb-sm-0 p-0 ">
+                            <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0 float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Page</a></li>
+                                <li class="breadcrumb-item active">Blank</li>
+                            </ol>
+                        </nav> -->
+                        <div class="col-sm-12 header-title p-0">
+                            <div class="media">
+                                
+                                {% block innerlinks %}
+                                {% endblock %}
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <!--/.Content Header (Page header)--> 
+                  {% block body %}
+                  {% endblock %}
+                </div><!--/.main content-->
+                <footer class="footer-content">
+                    <div class="footer-text d-flex align-items-center justify-content-between">
+                        <div class="copy">© Intelexcel School Management System</div>
+                        <div class="credit">Designed by: <a href="http://intelexcel.com">Intelexcel</a></div>
+                    </div>
+                </footer><!--/.footer content-->
+                <div class="overlay"></div>
+            </div><!--/.wrapper-->
+        </div>
+        <!--Global script(used by all pages)-->
+          <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+        <script src="{% static 'assets/plugins/jQuery/jquery-3.4.1.min.js'%}"></script>
+        <!-- <script src="{% static 'assets/dist/js/popper.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/metisMenu/metisMenu.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js'%}"></script> -->
+        <!-- Third Party Scripts(used by this page)-->
+        <!-- <script src="{% static 'assets/plugins/chartJs/Chart.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/sparkline/sparkline.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js'%}"></script> -->
+        <!--Page Active Scripts(used by this page)-->
+        <!-- <script src="{% static 'assets/dist/js/pages/dashboard.js'%}"></script> -->
+        <!--Page Scripts(used by all page)-->
+        <!-- <script src="{% static 'assets/dist/js/sidebar.js'%}"></script>
+        <script src="{% static 'assets/plugins/modals/classie.js'%}"></script>
+        <script src="{% static 'assets/plugins/footable-bootstrap/js/footable.active.js'%}"></script>
+        <script src="{% static 'assets/plugins/footable-bootstrap/js/footable.all.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/modals/modalEffects.js'%}"></script> -->
+
+          <!-- NEW SCRIPT FILE -->
+
+
+
+        <script src="{% static 'assets/dist/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/metisMenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
+        <!-- Third Party Scripts(used by this page)-->
+        <script src="{% static 'assets/plugins/datatables/dataTables.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.responsive.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/responsive.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/dataTables.buttons.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.bootstrap4.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/modals/classie.js'%}"></script>
+        <script src="{% static 'assets/plugins/datatables/jszip.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/pdfmake.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/vfs_fonts.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.html5.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.print.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/datatables/buttons.colVis.min.js' %}"></script>
+        <!--Page Active Scripts(used by this page)-->
+        <script src="{% static 'assets/plugins/datatables/data-bootstrap4.active.js' %}"></script>
+        <!--Page Scripts(used by all page)-->
+        <script src="{% static 'assets/dist/js/sidebar.js' %}"></script>
+        <!--   JAVA SCRIPT DATA TABLES     -->
+        <script src="{% static 'assets/plugins/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/jquery-ui-1.12.1/jquery-ui.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/jsgrid/dist/jsgrid.min.js' %}"></script>
+<!--        <script src="{% static 'assets/plugins/jsgrid/src/i18n/fr.js' %}"></script>-->
+
+        <script src="{% static 'assets/plugins/jsgrid/dist/db.js' %}"></script>
+
+        <script src="{% static 'assets/plugins/jsgrid/dist/jsgrid.active.js' %}"></script>
+        <script src="{% static 'assets/plugins/nestable/nestable-list.active.js' %}"></script>
+
+        <script src="{% static 'assets/plugins/select2/dist/js/select2.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/jquery.sumoselect/jquery.sumoselect.min.js'%}"></script>
+        <script src="{% static 'assets/plugins/modals/modalEffects.js'%}"></script>
+        <script src="{% static 'assets/dist/js/pages/demo.select2.js' %}"></script>
+        <script src="{% static 'assets/plugins/bootstrap4-toggle/js/bootstrap4-toggle.min.js' %}"></script> 
+        <script src="{% static 'assets/dist/js/pages/forms-basic.active.js' %}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#datatables').dataTable();
+    });
+    
+</script>
+<script> $('.date').datepicker({ dateFormat:'yy-mm-dd' }).val(); </script>
+{% block js %}
+{% endblock %}
+
+    </body>
+
+<!-- Mirrored from bhulua.thememinister.com/blank-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Oct 2019 12:00:56 GMT -->
+</html>

@@ -1,0 +1,139 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'academic/academic_nav.html' %}
+{% endblock %}
+    {% block css %}
+        <style>
+            #div_id_section>label::after {
+                content: "+";
+                background: #389707;
+                width: 10px;
+                height: 10px;
+                margin: 10px;
+                padding: 1px 10px 1px 10px;
+                color: white;
+                cursor: pointer;
+                pointer-events: all;
+            }
+        </style>
+    {% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Add New Class</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form method="POST" enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            {{form.section|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.class_name|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{form.class_number|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-2">
+                                            {{form.fee|as_crispy_field}}
+                                        </div>
+                                        <div class="col-md-2">
+                                            {{form.discount|as_crispy_field}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {{form.note|as_crispy_field}}
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="Save Data" class="btn btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+
+                    <div class="md-modal md-effect-1" id="modal-1">
+                        <div class="md-content">
+                            
+                            <h4 class="font-weight-600 mb-0">Add New Section </h4>
+                           
+                            <div class="n-modal-body">
+                                <form method="POST" id="addSectionForm">
+                                    {% csrf_token %}
+                                    {{sectionform|crispy}}
+                                 <div class="row">
+                                     <div class="col-md-1">
+                                        <button type="submit" class="btn btn-primary"> Add </button>
+                                     </div>
+                                     <div class="col-md-3">
+                                        <button type="button" class="btn btn-danger md-close" id="close">Close</button>
+
+                                     </div>
+                                 </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success md-trigger mb-2 mr-1" id="model_open" style="display: none;" data-modal="modal-1">Fade in &amp; Scale</button>
+                    
+
+                    {% endblock %}
+{% block js %}
+
+<script>
+    $(document).ready(function(){
+        $("#div_id_section").children('label').click(function(){ 
+            $('#model_open').click();
+        });
+        var i =0;
+        $('#addSectionForm').submit(function(e){
+            e.preventDefault();
+            
+            $.ajax({
+                url: "{% url 'student:create_section' %}",
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function(data){
+                    if(data.status=='success'){
+                        $('#id_section').append('<option selected="selected" value="'+data.pk+'">'+data.name+'</option>');
+                        $('#close').click();
+                        $('#id_section_name').css('background','white');
+                    }else{
+                        $('#id_section_name').css('background','red').attr('alt','Already Exists');
+                       
+                        if(i==0){
+                            $('#id_section_name').parent().append("Already Exists");
+                            i=10;
+                        }
+                    }
+                }
+               
+
+            })
+           
+        });
+
+    });
+</script>
+
+{% endblock %}

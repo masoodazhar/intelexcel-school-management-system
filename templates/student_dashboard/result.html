@@ -1,0 +1,108 @@
+{% extends 'student_dashboard/base.html' %}
+{% block body %}
+<section class="content">
+
+  <!-- Default box -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">Over All Subject Exam Details</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                title="Collapse">
+          <i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+      
+        
+      <table class="table table-light table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Subjects</th>
+            <th>Final/Mid Terms</th>
+            <th>Attendance Marks</th>
+            <th>Class Test Marks</th>
+            <th>Assignment Marks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student_marks in collect_std_marks_subs %}
+              
+              <tr>
+                <td>{{student_marks.subject_name}}</td>
+                <td>{{student_marks.examin}} out of {{student_marks.examout}}</td>
+                <td>{{student_marks.attendancin}} out of {{student_marks.attendanceout}}</td>
+                <td>{{student_marks.classtestin}} out of {{student_marks.classtestout}}</td>
+                <td>{{student_marks.assignmentin}} out of {{student_marks.assignmentout}}</td>
+            
+              </tr>
+          
+          {% endfor %}
+         
+        </tbody>
+        
+      </table>
+      
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      Try your best for future.
+    </div>
+    <!-- /.box-footer-->
+  </div>
+  <!-- /.box -->
+
+  <div class="box">
+    <div class="box-header with-border ">
+      <h3 class="box-title">All Type of Exams, Class Test and Assignment Detals</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                title="Collapse">
+          <i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+      <!-- {% for calculated_marks in get_calculated_marks %}
+          {{calculated_marks}}
+          <br>
+      {% endfor %} -->
+        
+      <table class="table table-light table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Type of Exam, Test, Assignments</th>
+            <th>Subject Name</th>
+            <th>Total Required Marks</th>
+            <th>Marks Assigned From Your Faculty</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {% for calculated_marks in get_calculated_marks %}
+          <td>{{calculated_marks.exam_type}}</td>
+          <td>{{calculated_marks.subject}}</td>
+          <td>{{calculated_marks.total_marks}}</td>
+          <td>{{calculated_marks.assigned_marks}}</td>
+         
+            
+          {% endfor %}
+         
+        </tbody>
+        
+      </table>
+      
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      Try your best for future.
+    </div>
+    <!-- /.box-footer-->
+  </div>
+</section>
+{% endblock %}

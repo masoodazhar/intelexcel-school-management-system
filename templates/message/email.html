@@ -1,0 +1,36 @@
+{% extends 'message/master_mail.html' %}
+{% load crispy_forms_tags %}
+
+{% block mailbody %}
+                   
+
+
+
+
+
+                                <div class="col-sm-12 col-md-12 col-lg-9 p-0 inbox-mail">
+                                    <div class="mailbox-content">
+                                  
+                                       {% for mail in mail_list %}
+                                        <div data-href="mailbox_details.html" class="inbox_item d-flex align-items-center unread">
+                                            <div class="i-check d-none d-xl-block my-0 mr-2">
+                                                <!-- <input tabindex="9" type="checkbox" id="square-checkbox-1"> -->
+                                                <i class="glyphicon glyphicon-envelope p-2" style="font-size: 32px;"></i>
+                                            </div>
+                                           
+                                            <!-- <img src="assets/dist/img/avatar.png" class="inbox-avatar d-none d-xl-block mr-2" alt=""> -->
+                                            <div class="inbox-avatar-text">
+                                                <h6 class="avatar-name fs-15 font-weight-600 mb-0">{{mail.mail_to}}</h6>
+                                                <div><span><strong> {{ mail.message|slice:":10" }} : </strong><span> {{ mail.message|slice:":30" }} </span></span></div>
+                                            </div>
+                                            <div class="inbox-date d-none d-xl-block ml-auto">
+                                                <div class="date">9:27 AM</div>
+                                                <div><small>May 27th</small></div>
+                                            </div>
+                                        </div>
+                                       {% endfor %}
+                                        
+                                    </div>
+                                </div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'academic/academic_nav.html' %}
+{% endblock %}
+
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">All Section List</h6>
+                                       
+                                       
+                                      
+                                    </div>
+                                            {% for message in messages %}
+                                            <div class="alert alert-success "> {{message}} </div>
+                                            {% endfor %}
+                                      
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <form novalidate method="post">
+                                    {% csrf_token %}
+                                    {{ form|crispy }}
+                                    <input type="submit" value="Save Section" name=""  class="btn btn-primary" >
+                                </form>
+
+                               
+                                <div class="table-responsive my-4">
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th width="10%">Section ID</th>
+                                              <th width="30%">Section Name</th>
+                                              <th width="30%">Updated Date</th>
+                                              <th width="30%">Action</th>
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                       
+                                       {% for section_data in section %}
+                                            <tr>
+                                                <td>{{ section_data.pk }}</td>
+                                                <td>{{ section_data.section_name }}</td>
+                                                <td>{{ section_data.inserted_date }}</td>
+                                                <td>
+                                                    <a href="{% url 'student:update_section' pk=section_data.pk %}" class="btn btn-labeled btn-success mb-2 mr-1">
+                                                        <span class="btn-label"><i class="glyphicon glyphicon-pencil"></i></span>Edit
+                                                    </a>
+                                                    <a href="{% url 'student:delete_section' pk=section_data.pk %}" class="btn btn-labeled btn-warning mb-2 mr-1">
+                                                        <span class="btn-label"><i class="glyphicon glyphicon-remove"></i></span>Delete
+                                                    </a>
+                                                   
+                                                </td>
+                                            </tr>
+                                       {% endfor %}
+
+                                      </tbody>
+
+                                  </table>
+                              </div>
+
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}

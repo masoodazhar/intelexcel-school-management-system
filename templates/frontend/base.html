@@ -1,0 +1,310 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+    
+<!-- Mirrored from demo.devitems.com/shiksha-v1/shiksha/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 18:07:29 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Intelexcel School Management System</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png' %}">
+        <!-- Place favicon.ico in the root directory -->
+		
+		
+		<!-- all css here -->
+        <link rel="stylesheet" href="{% static 'frontend/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/magnific-popup.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/owl.carousel.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/font-awesome.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/ionicons.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/headline.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/et-line-icon.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/animate.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/material-design-iconic-font.min.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/meanmenu.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/Pe-icon-7-stroke.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/bundle.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'frontend/css/responsive.css' %}">
+        <script src="{% static 'frontend/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+        {% block css %}
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+			<!-- header-top-area-start -->
+			<div class="header-top-area gray-bg-1">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-6 col-sm-5 col-xs-12">
+							<div class="header-left-wrapper">
+								<ul class="header-top-text">
+									<li>E-mail Address : Intelexcel@mail.com</li>
+								</ul>
+								<ul class="header-top-text hidden-sm hidden-xs">
+									<li>Contact Number : +923242806949</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-7 col-xs-12">
+							<div class="header-right-wrapper">
+								{% if request.session.student_login %}
+								<ul class="header-right-text floatright">
+									<li>
+										<a href="{% url 'student_dashboard' %}"> Dashboard </a> |
+										<a href="{% url 'frontendlogout' %}"> Logout </a>
+									</li>
+								</ul>
+								{% else %}
+
+								<ul class="header-right-text floatright">
+									<li><a href="{% url 'home:main_page' %}">School Portal</a></li>
+									<li><a href="{% url 'frontendlogin' %}">Student Login</a></li>
+									
+								</ul>
+								{% endif %}
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- header-top-area-end -->
+			<!-- main-menu-area-start -->
+				<div class="main-menu-area">
+					<div class="container-fluid">
+						<div class="col-md-2 col-sm-2 col-sm">
+							<div class="logo">
+								<a href="{% url 'frontendhome' %}"><img src="{% static 'frontend/img/logo/logo.png' %}" style="width: 130px;" alt="" /></a>
+							</div>
+						</div>
+						<div class="col-md-9 col-sm-9">
+							<div class="main-menu text-center">
+								<nav>
+									<ul>
+										<li class="{% block home %} {% endblock %}">
+                                            <a href="{% url 'frontendhome' %}">Home</a>
+										</li>                                                         
+										<li class="{% block about %} {% endblock %}"><a href="{% url 'frontendabout' %}">About</a></li>
+										<li class="{% block course %} {% endblock %}"> <a href="{% url 'frontendcources' %}">Courses</a></li>
+										<li class="{% block event %} {% endblock %}"><a href="{% url 'frontendevent' %}">Event</a></li>
+										<li class="{% block gallery %} {% endblock %}"><a href="{% url 'frontendgallery' %}">Gallery</a>
+											<!-- <ul class="sub-menu text-left">
+												<li><a href="gallery.html">Gallery </a></li>
+												<li><a href="courses-list.html">courses list</a></li>
+												<li><a href="courses-details.html">courses-details</a></li>
+												<li><a href="event-details.html">event-details</a></li>
+												<li><a href="login.html">login</a></li>
+												<li><a href="register.html">register</a></li>
+											</ul> -->
+										</li>
+										<li class="{% block noticboard %} {% endblock %}"><a href="{% url 'noticboard' %}">Notice Board</a>
+											<!-- <ul class="sub-menu text-left">
+												<li><a href="blog-left-sidebar.html">blog-left-sidebar</a></li>
+												<li><a href="blog-right-sidebar.html">blog-right-sidebar</a></li>
+												<li><a href="blog-no-sidebar.html">blog-no-sidebar</a></li>
+												<li><a href="blog-details.html">blog-details</a></li>
+												<li><a href="blog-details-no-sidebar.html">blog-details-no-sidebar</a></li>
+											</ul> -->
+										</li>
+										<li class="{% block contact %} {% endblock %}"><a href="{% url 'frontendcontact' %}">Contact</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+						<div class="col-md-1 col-sm-1">
+							<div class="header-search">				
+								<div class="search-wrapper">
+									<a href="javascript:void(0);" class="search-open">
+										<span class="ti-search"></span>
+									</a>
+									<div class="search-inside animated bounceInUp"> <i class="icon-close search-close fa fa-times"></i>
+										<div class="search-overlay"></div>
+										<div class="position-center-center">
+											<div class="search">
+												<form>
+													<input type="search" placeholder="Search Here">
+													<button type="submit"><i class="fa fa-search"></i></button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- <div class="header-button floatright hidden-md hidden-sm hidden-xs">
+									<a href="#">Buy Now</a>
+								</div> -->
+							</div>
+						</div>
+						<div class="col-xs-12"><div class="mobile-menu"></div></div>
+					</div>
+				</div>
+			<!-- main-menu-area-end -->
+		</header>
+{% block body %}
+{% endblock %}
+
+		<footer>
+			<!-- footer-top-area-start -->
+			<div class="footer-top-area pt-100 pb-70 bg-opacity-5" style="background-image:url({% static 'frontend/img/bg/2.jpg' %})">
+				<div class="container">
+					<div class="border-bottom">
+						<div class="row">
+							<div class="col-md-3 col-sm-6">
+								<div class="footer-wrapper mb-30">
+									<h2 class="footer-title">About Poralikha</h2>
+									<div class="footer-content">
+										<p>Lorem ipsum dolor sit cnr adipisicing elit, sed do eiusmod tempor incididuntlabore et dolore magna aliqua. </p>
+									</div>
+									<ul class="footer-link">
+										<li><i class="zmdi zmdi-pin"></i>California Street san Francisco, CA</li>
+										<li><i class="fa fa-phone"></i>Phone : +660 256 24857 </li>
+										<li><i class="fa fa-envelope"></i>Email : username@email.com,</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-3 footer-1 col-sm-6">
+								<div class="footer-wrapper mb-30">
+									<h2 class="footer-title">Useful Link</h2>
+									<ul class="footer-menu">
+										<li><a href="about.html">About tutoring</a></li>
+										<li><a href="index.html">Homepage</a></li>
+										<li><a href="courses-list.html">Class Schedule</a></li>
+										<li><a href="contact.html">Contact Us</a></li>
+										<li><a href="courses-list.html">Term & Condition</a></li>
+										<li><a href="courses-list.html">Our mission</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="footer-wrapper mb-30">
+									<h2 class="footer-title">Latest News</h2>
+									<ul class="latest-news">
+										<li>
+											<div class="latest-news-info">
+												<div class="latest-news-img">
+													<a href="blog-details.html"><img src="{% static 'frontend/img/footer/1.jpg' %}" alt="" /></a>
+												</div>
+												<div class="latest-news-content">
+													<span>16 th Sep, 2017</span>
+													<h5><a href="blog-details.html">Sports Day is near ready soon</a></h5>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="latest-news-info">
+												<div class="latest-news-img">
+													<a href="blog-details.html"><img src="{% static 'frontend/img/footer/2.jpg' %}" alt="" /></a>
+												</div>
+												<div class="latest-news-content">
+													<span>16 th Sep, 2017</span>
+													<h5><a href="blog-details.html">Sports Day is near ready soon</a></h5>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="latest-news-info">
+												<div class="latest-news-img">
+													<a href="blog-details.html"><img src="{% static 'frontend/img/footer/1.jpg' %}" alt="" /></a>
+												</div>
+												<div class="latest-news-content">
+													<span>16 th Sep, 2017</span>
+													<h5><a href="blog-details.html">Sports Day is near ready soon</a></h5>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="footer-wrapper mb-30">
+									<h2 class="footer-title">Instagram Feed</h2>
+									<ul id="Instafeed" class="footer-img"></ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="subscribes-area pt-50">
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<div class="subscribess-wrapper mb-30">
+									<div class="subscribe-info">
+										<h5>Contact With Us :</h5>
+									</div>
+									<div class="footer-icon">
+										<a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+										<a href="https://twitter.com/"><i class="fa fa-twitter"></i></a>
+										<a href="https://www.pinterest.com/"><i class="fa fa-pinterest-p"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<div class="subscribess-wrapper mb-30">
+									<div class="subscribes-content">
+										<h5>Subscribe Now :</h5>
+									</div>
+									<div id="mc_embed_signup" class="subscribe-form">
+										<form action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+											<div id="mc_embed_signup_scroll" class="mc-form">
+												<input type="email" value="" name="EMAIL" class="email" placeholder="Enter Your Email" required>
+												<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+												<div class="mc-news" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
+												<div class="clear clear2"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- footer-top-area-end -->
+			<!-- footer-bottom-area-start -->
+			<div class="footer-bottom-area bg-opacity-8 ptb-25" style="background-image:url({% static 'frontend/img/bg/18.jpg' %})">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-sm-6">
+							<div class="copyright">
+								<p><i class="fa fa-copyright"></i>Copyright, 2017 <a href="http://devitems.com/">Devitems.com</a></p>
+							</div>
+						</div>
+						<div class="col-md-6 col-sm-6">
+							<ul class="footers-link floatright">
+								<li><a href="#">Home</a></li>
+								<li><a href="#"> FAQ</a></li>
+								<li><a href="#"> Support</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- footer-bottom-area-end -->
+		</footer>		
+        {% block js %}
+        {% endblock %}
+		
+		<!-- all js here -->
+        <script src="{% static 'frontend/js/vendor/jquery-1.12.0.min.js' %}"></script>
+        <script src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'frontend/js/headline.js' %}"></script>
+        <script src="{% static 'frontend/js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'frontend/js/jquery.scrollUp.min.js' %}"></script>
+        <script src="{% static 'frontend/js/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'frontend/js/waypoints.min.js' %}"></script>
+        <script src="{% static 'frontend/js/jquery.parallax-1.1.3.js' %}"></script>
+        <script src="{% static 'frontend/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'frontend/js/jquery.meanmenu.js' %}"></script>
+        <script src="{% static 'frontend/js/ajax-mail.js' %}"></script>
+        <script src="{% static 'frontend/js/instafeed.min.js' %}"></script>
+        <script src="{% static 'frontend/js/wow.min.js' %}"></script>
+        <script src="{% static 'frontend/js/plugins.js' %}"></script>
+        <script src="{% static 'frontend/js/main.js' %}"></script>
+    </body>
+
+<!-- Mirrored from demo.devitems.com/shiksha-v1/shiksha/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Sep 2020 18:08:48 GMT -->
+</html>

@@ -1,0 +1,52 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block body %}
+		<!-- login-area-start -->
+		<!-- page-title-area-start -->
+		<div class="page-title-area ptb-110 bg-opacity-6" style="background-image:url({% static 'frontend/img/bg/6.jpg' %})">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-title-text text-center">
+							<h2>login</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- page-title-area-end -->
+		<div class="register-area ptb-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4">
+                        <div class="login">
+                            <div class="login-form-container">
+                                <div class="login-form">
+                                    {% if invalid_login_message %}
+                                    <div class="alert alert-danger my-4">{{invalid_login_message}}</div>
+                                    {% endif %}
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <input name="email" placeholder="Email Address" type="text">
+                                        <input name="password" placeholder="Password" type="password">
+                                        <div class="button-box">
+                                            <div class="login-toggle-btn">
+                                                <input type="checkbox">
+                                                <label>Remember me</label>
+                                                <a href="#">Forgot Password?</a>
+                                            
+                                            </div>
+                                            <button type="submit" class="default-btn">Login</button>
+                                        </div>
+                                       
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- login-area-end -->
+		{% endblock %}

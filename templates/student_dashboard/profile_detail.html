@@ -1,0 +1,128 @@
+{% extends 'student_dashboard/base.html' %}
+{% block body %}
+<section class="content">
+
+  <!-- Default box -->
+  <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Student Profile</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover table-bordered">
+                <tr>
+                  <td><b>Student Name</b></td>
+                  <td> {{student_data.name_of_student}} </td>
+                  <td><b>Father Name</b></td>
+                  <td> {{student_data.father_name}} </td>
+                  <td><b>Father CNIC</b></td>
+                  <td> {{student_data.father_cnic}} </td>
+                  <td><b>Father Profession</b></td>
+                  <td> {{student_data.father_profession}} </td>
+                </tr>
+
+                <tr>
+                  <td><b>Admission Date</b></td>
+                  <td> {{student_data.admission_date}} </td>
+                  <td><b>Class</b></td>
+                  <td> {{student_data.admission_class}} </td>
+                  <td><b>Registration No</b></td>
+                  <td> {{student_data.admission_registration}} </td>
+                  <td><b>Admission Section</b></td>
+                  <td> {{student_data.admission_section}} </td>
+                </tr>
+
+                <tr>
+                  <td><b>Cast</b></td>
+                  <td> {{student_data.cast}} </td>
+                  <td><b>Date Of Birth</b></td>
+                  <td> {{student_data.date_of_birth }} </td>
+                  <td><b>Contact</b></td>
+                  <td> {{student_data.contact}} </td>
+                  <td><b>Gender</b></td>
+                  <td> {{student_data.gender}} </td>
+                </tr>
+
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Student Profile</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover table-bordered">
+                <tr>
+                  <th width="5%">Days</th>
+                  <th>Days Assigned</th>
+                </tr>
+              {% for routine in routines %}            
+                <tr>
+                  <td><b>{{routine.days}}</b></td>
+                      {% for routin in routine.routine %}                                  
+                      <td>
+                        <div class="col-md-2">
+                            <div class="box box-warning box-solid collapsed-box">
+                              <div class="box-header with-border">
+                                <h3 class="box-title">{{routin.class_name}}</h3>
+                  
+                                <div class="box-tools pull-right">
+                                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                  </button>
+                                </div>
+                                <!-- /.box-tools -->
+                              </div>
+                              <!-- /.box-header -->
+                              <div class="box-body" style="">
+                                
+                              <p style="border-bottom: 1px solid;"><b>Teacher</b>:
+                                  {{routin.teacher_name}}</p>
+                              <p style="border-bottom: 1px solid;"><b>Subjects:</b>
+                                  {{routin.subject_name}}</p>
+                              <p><b>Timing:</b>
+                                  {{routin.start_time}}
+                                  to
+                                  {{routin.end_time}}
+                              </p>
+                              </div>
+                              <!-- /.box-body -->
+                            </div>
+                          </div>
+                      </td>
+                      {% endfor %}
+                </tr>
+              {% endfor %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+  <!-- /.box -->
+
+</section>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block gallery %}
+active
+{% endblock %}
+{% block body %}
+		<!-- page-title-area-start -->
+		<div class="page-title-area ptb-170 bg-opacity-6" style="background-image:url({% static 'frontend/img/bg/picnic.jpg' %})">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-title-text">
+							<h2>Our Gallery Collection</h2>
+							<p>All School Events, Programs, picnics Gallery Collection  .</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- page-title-area-end -->
+		<!-- gallery-area-start -->
+		<div class="gallery-area pt-130 pb-125">
+			<div class="container">
+				<div class="row">
+					<div class="gallery">
+						{% for gallery in galleries %}
+						<div class="col-md-3 p-rl col-sm-6">
+							<div class="gallery-wrapper mb-5">
+								<div class="gallery-img">
+									<a href="#"><img src="{{gallery.image.url}}" alt="" /></a>
+									<div class="gallery-icon">
+										<a class="image-link" href="{{gallery.image.url}}"><span class="ti-search"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- gallery-area-end -->
+	{% endblock %}

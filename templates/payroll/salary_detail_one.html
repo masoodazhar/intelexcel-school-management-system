@@ -1,0 +1,244 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'payroll/payroll_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6 class="fs-17 font-weight-600 mb-0">Salary History | <a href="#details"  style="color: #fc4008;"> <i class="typcn typcn-clipboard"></i> Click here to Check Monthly Slip</a></h6>
+                                                
+                                            </div>
+                                            {% if status == 1 %}
+                                                <div class="alert alert-success">Salary has saved. you can edit </div>
+                                                {% else %}
+                                                <div class="alert alert-danger">Salary of this month is not Paid </div>
+
+                                                {% endif %}
+                                             <div class="col-md-6">
+                                                {% for message in messages %}
+                                                    <div class="alert alert-success"> {{message}} </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <input type="text" value="{{ salary_pk }}" style="display: none;" name="salary_pk">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    {{salary_form.employee_name|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.Salary_date|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.Salary_release_date|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.salary|as_crispy_field}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                
+                                                <div class="col-md-3">
+                                                    {{salary_form.bonus|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.other|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.payment_method|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{salary_form.details|as_crispy_field}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                               <input type="submit" value="{% if status == 1 %}Save Changes{% else  %}Pay Now{% endif %}" class="btn btn-primary ">
+                                               
+                                            </div>
+                                        </form>
+                                    
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive my-4">
+                                    <table id="example" class="table display table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"> S-No </th>
+                                                <th width="15%">Status</th>
+                                                <th width="10%">Salaey</th>
+                                                <th width="10%">P-M</th>
+                                                <th width="10%">Date of Salary</th>
+                                                <th width="10%">Release Date</th>
+                                                <th width="5%">Bonus</th>
+                                                <th width="5%">other</th>
+                                                <th width="10%">Details</th>
+                                                <th width="10%">Action</th>
+  
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                         
+                                         {% for salary in total_year_salary_detail %}
+                                             <tr>
+                                               <td> {{forloop.counter}} </td>
+                                               <td> {% if salary.salary > 0 %} <span class="btn btn-success btn-labeled" >Paid Rs. {{salary.salary}}</span> {% else %} <span class="btn btn-danger btn-labeled" >Not Paid</span> {% endif %} </td>
+                                            
+                                               <td> {{ salary.salary }} </td>
+                                               <td> {{ salary.payment_method }} </td>
+                                               <td> {{ salary.Salary_date }} </td>
+                                               <td> {{ salary.Salary_release_date }} </td>
+                                               <td> {{ salary.bonus }} </td>
+                                               <td> {{ salary.other }} </td>
+                                               <td> {{ salary.details }} </td>
+                                               <td> <a href="{% url 'payroll:teacher_update' pk=salary.pk %}"> <i class="typcn typcn-edit"></i> Edit</a></td>
+                                             </tr>
+                                         {% endfor %}
+  
+                                        </tbody>
+  
+                                    </table>
+                                    <input type="submit" value="Pay Now" class="btn btn-success">
+                                </div>
+                            </div>
+                        </div>
+                
+                     <div class="card mb-4" id="details">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Salary Detail</h6>
+                                        {{salary_detail}}
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <h2>Salary Slip </h2>	
+                                        <div class="table-responsive">
+                                            <div class="table-responsive custom_datatable">						
+                                                <table class="table table-bordered" style="width:100%;margin:auto;text-align:left;" >
+                                                    <tbody>										
+                                                        <tr>
+                                                            <td rowspan="2" colspan="2">
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <img src=" {{ teacher_detail.photo.url }} " style="width: 100px; height: 100px;" class="img-fluid img-thumbnail rounded-circle">
+                                                             
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <a href="#"  style="vertical-align: bottom;"> <h3 style="margin:8px 0 0 63px; vertical-align: bottom;"> {{teacher_detail.first_name|capfirst }} {{teacher_detail.last_name|capfirst }} </h3></td></a>
+                                                       
+                                                                    </div>
+                                                                </div>
+                                                                     <td>Challan NO</td>
+                                                            <td colspan="2"> {% if salary_detail %} {{ salary_detail.pk }}{{ salary_detail.pk }} {% else %} N/A {% endif %} </td>
+                                                        </tr>									
+                                                        <tr>
+                                                            <td>Date</td>  
+                                                            <td colspan="2">{% if salary_detail %}  {{ salary_detail.Salary_date }} {% else %} N/A {% endif %} </td>  											
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">Bank Name / Branch : </td>
+                                                            <td colspan="3">Bank Name / N/A</td>
+                                                        </tr>
+                                                       
+                                                        <tr>
+                                                            <td colspan="2">Monthly Bonus</td>
+                                                            <td width="150">Amount</td>
+                                                            <td width="50">RS</td>
+                                                            <td width="50">{% if salary_detail %} {{ salary_detail.bonus }} {% else %} N/A {% endif %}</td>
+                                                        </tr>
+                                                        <!-- <tr>
+                                                            <td>Other Detection</td>
+                                                            <td colspan="1">Ward, Block and Door #, Assessment #,UPI #</td>
+                                                            <td width="150">Amount</td>
+                                                            <td width="50">RS</td>
+                                                            <td width="50">00</td>
+                                                        </tr>	 -->
+                                                        <tr>
+                                                            <td rowspan="6">Other Detection & details</td>
+                                                            <td rowspan="6" width="50%">{% if salary_detail %} {{ salary_detail.details }}	 {% else %} N/A {% endif %}</td>
+                                                            <td>Amount</td>
+                                                            <td>Rs</td>	
+                                                            <td>{% if salary_detail %} {{ salary_detail.other }} {% else %} N/A {% endif %}</td>
+                                                        </tr>
+                                                        <tr>	
+                                                            
+                                                        </tr>
+                                                        <tr>
+                                                           
+                                                        </tr>
+                                                       
+                                                        <tr>
+                                                            <td>Salary </td>
+                                                            <td>Rs</td>
+                                                            <td>{% if salary_detail %} {{ salary_detail.salary }} {% else %} N/A {% endif %}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total</td>
+                                                            <td>Rs</td>
+                                                            <td>{% if salary_detail %} {{ salary_detail.salary|add:salary_detail.bonus|add:salary_detail.other }} {% else %} N/A {% endif %}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">Payment Method </td>
+                                                          
+                                                            <td>{% if salary_detail %} {{salary_detail.payment_method}} {% else %} N/A {% endif %}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="5">Amount in words : <span > {% if salary_detail %}  {{total_bonus_other_salary_in_word}}  {% else %} N/A {% endif %} </span> </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                Depositer Signature
+                                                                <br>
+                                                                <br>
+                                                                <span>___________________</span>
+                                                            </td>
+                                                            <td>
+                                                                Office Manager signature
+                                                                <br>
+                                                                <br>
+                                                                <span>___________________</span>
+                                                            </td>
+                                                            <td colspan="3">
+                                                                Cashier Signature 
+                                                                <br>
+                                                                <br>
+                                                                <span>___________________</span>
+                                                                </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button class="btn btn-primary mt-4"> <i class="typcn typcn-printer"></i> Print</button>
+                                            </div>
+                                            
+                                        </div> 
+                                        
+                                    </div> 
+                               
+                            </div>
+                            
+                        </div>
+                        
+                    </div><!--/.body content-->
+{% endblock %}

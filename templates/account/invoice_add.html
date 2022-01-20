@@ -1,0 +1,161 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+<style>
+    td input{
+        width: 100px !important;
+    }
+    .invoce_detail{
+        background: aliceblue;
+        box-shadow: 0px 0px 1px black;
+        padding: 20px 21px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Create Invoices</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data" novalidate>
+                               <div class="row">
+                                   <div class="col-md-3 invoce_detail">
+                                   
+                                        {% csrf_token %}
+                                        {{form|crispy}}
+                                        <input type="submit" value="Save Data">
+                                  
+                                   </div>
+                                   <div class="col-md-9" style="margin: -20px 0px;">
+                                       <p>{{amountform.fee_type|as_crispy_field}}</p>
+                                       <table class="table table-bordered" >
+                                           <thead class="thead-light">
+                                               <tr>
+                                                   <th>#</th>
+                                                   <th>Fee Type</th>
+                                                   <th>Amount</th>
+                                                   <th>Discount(%)</th>
+                                                   <th>Subtotal</th>
+                                                   <th>Paid Amount</th>
+                                                   <th>Action</th>
+                                               </tr>
+                                           </thead>
+                                           <tbody id="tablebody">
+                                              
+                                           </tbody>
+                                           <tfoot>
+                                               <tr class="totalrow" style="display: none;">
+                                                    <th padding="5" colspan="3" style="text-align: right;" class="total_amount_set">00.00</th>
+                                                    <th class="discount_set">00.00</th>
+                                                    <th class="subtotal_set">00.00</th>
+                                                    <th class="paid_amount_set">00.00</th>
+                                                    <th></th>
+                                               </tr>
+                                           </tfoot>
+                                       </table>
+                                   </div>
+                               </div>
+                               </form>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        var count = 1; 
+        $('#id_fee_type').change(function(){
+            var fee_type_val = $(this).children('option:selected').val();
+            var fee_type_text = $(this).children('option:selected').text();
+
+            var row = 
+                '<tr class="rows">'+
+                    '<td>'+count+'</td>'+
+                    '<td><input type="text" value="'+fee_type_val+'" name="fee_types" style="display:none;"> <p>'+fee_type_text+'</p>'+
+                    '<td><input type="number" class="form-control id_amount" name="amount" step="any" required="" id="id_amount"></td>'+
+                    '<td><input type="number" class="form-control id_discount" name="discount" step="any" required="" id="id_discount"></td>'+
+                    '<td><input type="number" class="form-control id_subtotal" name="subtotal" value="00.00" readonly="readonly" step="any" required="" id="id_subtotal"></td>'+
+                    '<td><input type="number" class="form-control id_paid_amount" name="paid_amount" step="any" required="" id="id_paid_amount"></td>'+
+                    '<td><a href="#" class="remove_row">Delete</a></td>'+
+                '</tr>';
+            count++;
+            if(count>=1){
+                $('#tablebody').append(row);
+                $('.totalrow').show();
+            }else{
+                $('.totalrow').hide();
+            }
+
+
+
+            $('.rows').each(function(col,row){
+                var a = $(this).children('td').eq(1).text();
+                // alert(a);
+            });
+        });
+        var total_amount = 0;
+        var discount_amount = 0;
+        var sub_total = 0;
+        var paid_amount = 0;
+
+        $('#tablebody').delegate('.id_amount','keyup',function(event){
+            total_amount=0;
+            $('.id_amount').each(function(){
+                var amount = $.trim($(this).val())
+                amount = parseInt(amount==''?0:amount);
+                total_amount +=amount;
+            });
+            $('.total_amount_set').text(total_amount);
+        });
+
+        $('#tablebody').delegate('.id_discount','keyup',function(event){
+            discount_amount=0;
+
+            $('.id_discount').each(function(){
+                var amount = $.trim($(this).val());
+                amount = parseFloat(amount==''?0:amount);
+                discount_amount +=amount;
+            });
+            $('.discount_set').text(discount_amount);
+
+            var tot_amount = $.trim($(this).parents('td').prev('td').find('input').val());
+            tot_amount = parseFloat(tot_amount==''?0:tot_amount);
+
+            var tut_discount = $.trim($(this).val());
+            tut_discount = parseInt(tut_discount==''?0:tut_discount);
+          
+            $(this).parents('td').next('td').find('input.id_subtotal').val((tut_discount*tot_amount)/100);
+        
+            
+          
+        });
+
+        
+        $('#tablebody').delegate('a.remove_row','click',function(q){
+            q.preventDefault();
+            count--;
+            $(this).parents('tr').remove();
+        });
+
+    })
+</script>
+{% endblock %}

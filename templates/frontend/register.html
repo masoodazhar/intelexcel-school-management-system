@@ -1,0 +1,42 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+{% block body %}
+		<!-- page-title-area-start -->
+		<div class="page-title-area ptb-110 bg-opacity-6" style="background-image:url({% static 'frontend/img/bg/6.jpg' %})">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="page-title-text text-center">
+							<h2>register</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- page-title-area-end -->
+		<!-- login-area-start -->
+		<div class="register-area ptb-100">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8 col-lg-4 col-md-offset-2 col-lg-offset-4">
+                        <div class="login">
+                            <div class="login-form-container">
+                                <div class="login-form">
+                                    <form action="#" method="post">
+                                        <input name="user-name" placeholder="Username" type="text">
+                                        <input name="user-password" placeholder="Password" type="password">
+                                        <input name="user-email" placeholder="Email" type="email">
+                                        <div class="button-box">
+                                            <button type="submit" class="default-btn">Register</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<!-- login-area-end -->
+		{% endblock %}

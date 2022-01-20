@@ -1,0 +1,173 @@
+{% extends 'master.html' %}
+
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'fee/fee_nav.html' %}
+{% endblock %}
+{% block body %}
+
+
+                    <div class="body-content">
+                    
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                     <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Search fee defaulter students</h6>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="container bg-white">
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            {{ Feedefserchform.seacher_date|as_crispy_field }}
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for=""></label>
+                                                <input type="submit" class="btn btn-primary" value="Search">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                            <div class="card-body">
+                                <form id="generate_form" method="post" action=" ">
+                                    {% csrf_token %}                            
+                                    <span style="display: none;">{{ Feedefserchform.seacher_date|as_crispy_field }}</span>
+                                <div class="table-responsive my-4">
+                                    <table id="example" class="table display table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%"> 
+                                                    <input id="checkbox1" type="checkbox" checked="">
+                                                    <!-- <div class="checkbox checkbox-info checkbox-circle">
+                                                        <input id="checkbox1" type="checkbox" checked="">
+                                                        <label for="checkbox1">All</label>
+                                                    </div> -->
+                                                </th>
+                                                <th width="20%">Status</th>
+                                                <th width="16%">Challan No</th>
+                                                <th width="10%">Reg:</th>
+                                                <th width="15%">Tution Fee:</th>
+                                                <th width="20%">Name</th>
+                                                <th width="20%">Father Name</th>
+                                                <th width="10%">Section</th>
+                                                <th width="10%">Class</th>
+                                                <th> ACTION </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for students in all_student %}
+                                                <tr>
+                                                    <td>  
+                                                        <input type="checkbox" value="{{students.pk}}" checked name="pk" class="" style="width: 15px;">
+                                                        <!-- <div class="checkbox checkbox-info checkbox-circle" sty>
+                                                            <input id="checkbox" type="checkbox" checked="">
+                                                            <label for="checkbox">{{ forloop.counter }}</label>
+                                                        </div>     -->
+                                                    </td>
+                                                    <td> {% if students.status == 0 %} <span class="btn btn-danger">Not Paid</span> {% else %} <span class="btn btn-success">Paid: {{students.status}}. Rs </span>  {% endif %}  </td>
+                                                    <td> <input type="text" value="{{students.challan_number}}" name="challan_number"> </td>
+                                                    <td> <input type="text" name="reg_number" value="{{students.reg_number}}"> </td>
+                                                    <td> <input type="text" name="monthly_tution_fee" value="{{students.monthly_tution_fee}}"> </td>
+                                                    <td> <input type="text" name="name_of_student" value="{{students.student_name}}"> </td>
+                                                    <td> <input type="text" name="father_name" value="{{students.father_name}}"> </td>
+                                                    <td> <input type="text" name="section" value="{{students.section}}"> </td>
+                                                    <td> <input type="text" name="class" value="{{students.class_name}}"> </td>
+                                                    <td>
+                                                    <a href=""> Print </a>
+                                                    </td>
+                                                </tr>
+                                         {% endfor %}
+                                            
+                                        <tfoot>
+                                            <tr>
+                                                <th width="5%"> 
+                                                   All
+                                                </th>
+                                                <th width="20%">Status</th>
+                                                <th width="15%">Challan No</th>
+                                                <th width="15%">Reg:</th>
+                                                <th width="15%">Tution Fee:</th>
+                                                <th width="20%">Name</th>
+                                                <th width="20%">Father Name</th>
+                                                <th width="10%">Section</th>
+                                                <th width="10%">Class</th>
+                                                <th> ACTION </th>
+                                           
+                                            </tr>
+                                        </tfoot>
+                                        </tbody>
+  
+                                    </table>
+                                    <input type="submit" value="Pay Now" class="btn btn-success">
+                                </form>
+                                
+                               
+                           
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+
+    var date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth();
+    day = date.getDay();
+
+    var current_date = date.getFullYear()+'-'+add_zero((date.getMonth()+1))+'-'+add_zero(date.getDate());
+    
+    // document.getElementById('id_seacher_date').defaultValue = current_date;
+    // document.getElementById("id_due_date").defaultValue = year+'-'+add_zero(month)+'-'+add_zero(day);
+    
+
+    function add_zero(data){
+
+        if(data<10){
+            data = '0'+data;
+            return data;
+        }else{
+            return data;
+        }
+    }
+
+
+
+    $(document).ready(function(){
+       
+
+        // $('.issue_date').val(current_date);
+        // $('.due_date').val(current_date);
+        // $('.fee_month').val(current_date);
+
+        $('.seacher_date').change(function(){
+            $('.seacher_date').val($(this).val());
+        });
+
+ 
+    });
+</script>
+{% endblock %}

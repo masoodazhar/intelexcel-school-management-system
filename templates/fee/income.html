@@ -1,0 +1,187 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block innerlinks %}
+{% include 'fee/fee_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">All Expenses</h6>
+                                        <p id="fee_data" style="display:none ;">{{fee_data}}</p>
+                                        <p id="income_data" style="display: none;">{{income_data}}</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'account:income_create' %}" class="btn btn-primary">add new</a>
+                                <hr>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-3 offset-3">
+                                         {{search_form|crispy}}
+                                        </div>
+                                        <div class="col-md-3">
+                                         <div id="div_id_date" class="form-group"> 
+                                             <label for="id_date" class=" requiredField">
+                                                  <span class="asteriskField">&nbsp</span> 
+                                             </label> 
+                                             <div class=""> 
+                                                 <input type="submit"  value="Search" class="mx-4 btn btn-success">
+                                             </div>
+                                         </div>
+                                         
+                                        
+                                        </div>
+                                    </div>                                    
+                                </form>
+                                <div class="table-responsive my-4">
+                                    
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>S-No</th>
+                                              <th>Name</th>
+                                              <th>Date</th>
+                                              <th>File</th>
+                                              <th>Note</th>
+                                              <th>Action</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for income in incomes %}
+                                        <tr>
+                                            <td> {{forloop.counter}} </td>
+                                            <td> {{income.name}} </td>
+                                            <td> {{income.date}} </td>
+                                            <td> {% if income.file == 'not'  %}  No FIle {% else %} <a href="{{income.file.url}}" download="download">Download</a> {% endif %}  </td>
+                                            <td> {{income.note}} </td>
+                                            <td>
+                                                <a href="{% url 'account:income_update' pk=income.pk %}">Edit</a> | 
+                                                <a href="{% url 'account:income_delete' pk=income.pk %}">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+
+                                  </table>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                               
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="header-body mb-4 pt-0">
+                                            <div class="row align-items-end">
+                                                <div class="col">
+                                                    <!-- Pretitle -->
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <h6 class="header-pretitle text-muted fs-11 font-weight-bold text-uppercase mb-1">
+                                                                Overview
+                                                            </h6>
+                                                            <!-- Title -->
+                                                            <h1 class="header-title fs-21 font-weight-bold">
+                                                                Performance
+                                                            </h1>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <select id="get_income_with_ajax" class="form-control">
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                                <option value="2027">2027</option>
+                                                                <option value="2028">2028</option>
+                                                            </select>
+                                                            <p id="ajax_url" style="display: none;">{% url 'account:get_income_with_ajax' %}</p>
+                                                        </div>
+                                                        <div class="com-md-3" id="char_loader">
+                                                            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div> &nbsp;
+                                                            <strong>Loading......</strong>
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                   
+                                                </div>
+                                                <div class="col-auto">
+                                                    <!-- Nav -->
+                                                    <ul class="nav nav-tabs header-tabs">
+                                                        <li class="nav-item" >
+                                                            <a href="#" id="0"  class="nav-link text-center active" data-toggle="tab">
+                                                                <h6 id="student" class="header-pretitle text-muted fs-11 font-weight-bold text-uppercase mb-1">
+                                                                    Students Fee
+                                                                </h6>
+                                                                <h3 class="mb-0 fs-16 font-weight-bold">
+                                                                    Rs. <span id="total_fee">{{total_fee}}</span>
+                                                                </h3>
+                                                            </a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a href="#" id="1" class="nav-link text-center" data-toggle="tab">
+                                                                <h6 id="expense" class="header-pretitle text-muted fs-11 font-weight-bold text-uppercase mb-1">
+                                                                    Other Income
+                                                                </h6>
+                                                                <h3 class="mb-0 fs-16 font-weight-bold">
+                                                                    Rs. <span id="total_income">{{total_income}}</span>
+                                                                </h3>
+                                                            </a>
+                                                        </li>
+                                                        <!-- <li class="nav-item">
+                                                            <a href="#" id="2" class="nav-link text-center" data-toggle="tab">
+                                                                <h6 class="header-pretitle text-muted fs-11 font-weight-bold text-uppercase mb-1">
+                                                                    Bounce
+                                                                </h6>
+                                                                <h3 class="mb-0 fs-16 font-weight-bold">
+                                                                    50.2%
+                                                                </h3>
+                                                            </a>
+                                                        </li> -->
+                                                    </ul>
+                                                </div>
+                                            </div> <!-- / .row -->
+                                        </div> <!-- / .header-body -->
+                                        <div class="chart">
+                                            <canvas id="forecast" width="300" height="100"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                            </div>
+                        </div>
+                              </div>
+                            </div>
+                        </div>
+
+
+                    </div><!--/.body content-->
+{% endblock %}
+{% block js %}
+ <!-- Third Party Scripts(used by this page)-->
+ <script src="{% static 'assets/plugins/chartJs/Chart.min.js' %}"></script>
+ <!--Page Active Scripts(used by this page)-->
+ <script src="{% static 'assets/plugins/chartJs/chartJs.active.js' %}"></script>
+{% endblock %}

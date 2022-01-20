@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <script src="{% static 'assets/plugins/jQuery/jquery-3.4.1.min.js'%}"></script>
+</head>
+<body>
+   
+   <table class="table table-light table-bordered">
+       <thead class="thead-light"> 
+           <tr>
+               <th>Exam name</th>
+               <th>Exam Type</th>
+               <th>Required Mark</th>
+               <th>Mark Assign</th>
+           </tr>
+       </thead>
+       {% for message in messages %}
+                    {% if forloop.counter < 2 %}
+                    <div class="alert alert-success" role="alert">
+                        {{message}}
+                    </div>                       
+                    {% endif %}
+               {% endfor %}
+        
+       <form action="/student/get_class_asignments/{{exam_id}}/class/{{class_id}}/subject/{{subject}}" method="POST">
+       <tbody>
+           
+               
+         
+            {% csrf_token %}
+               <input type="hidden" value="{{student_id}}" name="student_id">
+               <input type="hidden" value="{{class_id}}" name="class_name">
+               <input type="hidden" value="{{module_holder}}" name="module_holder">
+               <input type="hidden" value="{{subject}}" name="subject">
+              <tr style="background-color: #8f0202; color: white; font-weight: bolder;">
+                  <td colspan="2">Subject Name</td>
+                  <td colspan="2">{{subject_name}}</td>
+              </tr>
+           {% for type in exam_type %}
+                <tr>
+                   <td colspan="4" style="background:gray; color:bisque;"> 
+                    <strong>{{type.type}} </strong>
+                    -------------------------------- .all marks will be divide on total Marks. Total Marks of 
+                    {% if type.type == 'midterm' %}
+                        Midterm: <strong>(<span >{{mark_distribution.exam}}</span>)</strong>
+                        
+                    {% elif type.type == 'final' %}
+                        final: <strong>(<span >{{mark_distribution.exam}}</span>)</strong>
+                        
+                    {% elif type.type == 'classtest' %}
+                    Class Test: <strong>(<span >{{mark_distribution.class_test}}</span>)</strong>
+                    
+                    {% elif type.type == 'assignment' %}
+                    Assignment: <strong>(<span >{{mark_distribution.assignment}}</span>)</strong>
+                    
+                    {% endif %}                    
+                  </td> 
+                </tr>
+
+                {% for detail in type.details %}
+                    <tr>
+                       
+                        <td> {{detail.exam_name|title}} </td>                        
+                        <td> {{detail.exam_type|title}} </td>
+                        <td> <span class="total-marks">{{detail.total_mark}}</span> </td>
+                        <td> <input type="text" required value="{{detail.marks_assign_for_next_time}}" class="assign" name="marks"> <input type="hidden" name="total_marks" value="{{detail.total_mark}}" id=""> <input type="hidden" name="exam_type" value="{{type.type}}"><input type="hidden" name="exam_id" value="{{detail.examsendpk}}"> </td>
+                        
+                    </tr>
+                    {% empty %}
+                   <tr>
+                       <td colspan="4"></td>
+                   </tr>
+                {% endfor %}
+           {% endfor %}
+
+          <tr>
+              <td colspan="4"> <input type="submit" value="Save Data" class="btn btn-primary"></td>
+          </tr>
+      
+       </tbody>
+    </form>
+   </table>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        $('.assign').keyup(function(){
+            var element = $(this)
+            element.parent('tr')
+        });
+
+        $('.assign').keyup(function(){
+            assign = $(this).val();
+            assign = parseInt(assign==''?0:assign)
+            required = $(this).parent().prev('td').children('span').text();
+            if(assign>required){
+                $(this).val(0)
+                alert("can not assign geater then required marks.")
+            }       
+
+        })
+    });
+    
+</script>

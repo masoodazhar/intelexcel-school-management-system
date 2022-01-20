@@ -1,0 +1,99 @@
+{% extends 'master.html' %}
+{% load crispy_forms_tags %}
+{% block innerlinks %}
+{% include 'payroll/payroll_nav.html' %}
+{% endblock %}
+{% block body %}
+                    <div class="body-content">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fs-17 font-weight-600 mb-0">Employee Attendance Details</h6>
+                                        
+                                    </div>
+                                    <form action="" method="POST" class="form-inline">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                {% csrf_token %}
+                                                    {{SearchDateForm|crispy}}
+                                            
+                                            </div>
+                                            <div class="col-md-6">
+                                                <br>
+                                                <input type="submit" value="Search" class="btn btn-success">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="text-right">
+                                        <div class="actions">
+                                            <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                                            <div class="dropdown action-item" data-toggle="dropdown">
+                                                <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a href="#" class="dropdown-item">Refresh</a>
+                                                    <a href="#" class="dropdown-item">Manage Widgets</a>
+                                                    <a href="#" class="dropdown-item">Settings</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                               
+                                <div class="table-responsive my-4">
+                                  <table id="example" class="table display table-bordered table-striped table-hover">
+                                      <thead>
+                                          <tr>
+                                              <th>#</th>
+                                            {% for days in heading %}
+                                                    <th>{{days}}</th>
+                                            {% endfor %}
+
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                       
+                                       {% for whole_year in whole_years %}
+                                            <tr>
+                                                <td> {{whole_year.month}} </td>
+                                                {% for atte_status in whole_year.atte_status %}
+                                                    <td class="{% if atte_status.sun_or_other_day == 's' %} 
+                                                    bg-warning 
+                                                    {% elif atte_status.sun_or_other_day == 'n' %}
+                                                    bg-info
+                                                    {% elif atte_status.sun_or_other_day == 'a' %}
+                                                    bg-danger
+                                                    {% elif atte_status.sun_or_other_day == 'p' %}
+                                                    bg-success
+                                                    {% elif atte_status.sun_or_other_day == 'h' %}
+                                                    bg-secondary
+                                                    {% elif atte_status.sun_or_other_day == 'l' %}
+                                                    bg-primary
+                                                    {% endif %}">
+                                                     {% if atte_status.sun_or_other_day == 'a' %}
+                                                        <i class="fa fa-times text-white"></i>
+                                                    {% elif atte_status.sun_or_other_day == 's' %}
+                                                        <i class="fa fa-times text-danger"></i>
+                                                    {% elif atte_status.sun_or_other_day == 'p' %}
+                                                        <i class="fa fa-check text-white"></i>
+                                                    {% elif atte_status.sun_or_other_day == 'h' %}
+                                                        H
+                                                    {% elif atte_status.sun_or_other_day == 'l' %}
+                                                        L
+                                                    {% else  %}
+                                                        N
+                                                    {% endif %}    
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>   
+                                       {% endfor %}
+                                      </tbody>
+
+                                  </table>
+                              </div>
+                            </div>
+                        </div>
+                    </div><!--/.body content-->
+{% endblock %}
