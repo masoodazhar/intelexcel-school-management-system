@@ -65,4 +65,4 @@ class SendMail(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     #     fail_silently=False
     #     )
     
-   
+#    this is in process
