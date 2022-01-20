@@ -22,4 +22,3 @@ here is the main screens
 ![5](https://user-images.githubusercontent.com/18389771/150316713-8c92787f-f3c0-4ff7-947e-97744e6040da.png)
 ![6](https://user-images.githubusercontent.com/18389771/150316715-34ac7544-e4c0-4cca-a3c1-595a489cc86e.png)
 ![7](https://user-images.githubusercontent.com/18389771/150316720-6762de59-8c8b-4c99-93a2-546684011df0.png)
-![8](https://user-images.githubusercontent.com/18389771/150316722-fd115de9-875b-4621-af1a-4114c418229d.png)
