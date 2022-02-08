@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 from payroll.models import Teacher
 from home.views import SchoolProfile
 from django.contrib.auth.models import User
-
+# Fee section
 
 class FeeDefSerchForm(forms.Form):
 

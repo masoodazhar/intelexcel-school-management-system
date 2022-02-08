@@ -20,6 +20,7 @@ from home.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
+# account section
 
 def convert_month(month_val):
     if len(str(month_val))<2:

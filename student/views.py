@@ -16,6 +16,7 @@ from academic.forms import ClassesForm, SectionForm
 from .forms import StudentMarkSearchForm, StudentMarkForm, AdmissionForm, TrophiesForm, AttendanceForm, ExamEmailForm, CalculateResultsForm
 import json
 # from django.http import JsonResponse
+# Student section
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from home.decorators import allowed_users
