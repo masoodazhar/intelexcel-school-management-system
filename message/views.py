@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from home.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-# Message section
+
 
 class MessageEmailView(TemplateView):
     template_name = 'message/message_email.html'

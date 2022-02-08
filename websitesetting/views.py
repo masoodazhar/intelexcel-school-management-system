@@ -10,7 +10,6 @@ from django import forms
 from django.http import JsonResponse
 import datetime
 # Create your views here.
-# User, Client section
 
 def websitesettinghome(request):
     return render(request, 'websitesetting/index.html')

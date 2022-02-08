@@ -10,7 +10,7 @@ from django.http import HttpResponse
 from django.utils import timezone
 # from django.contrib.auth.hashers import make_password
 # Create your views here.
-# Home section
+
 def FrontEndHome(request):
     sliders = Slider.objects.all()
     if not sliders:

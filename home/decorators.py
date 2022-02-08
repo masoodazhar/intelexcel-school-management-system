@@ -8,7 +8,7 @@ def unuthenticated_user(view_func):
             return redirect('userprofile')
         else:
             return view_func(request, *args, **kwargs)
-    return wrapper_func 
+    return wrapper_func
 
 
 def allowed_users(allowed_roles):
