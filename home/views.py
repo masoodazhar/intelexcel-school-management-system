@@ -37,7 +37,7 @@ from django.utils import timezone
 
 # from django.db.models.signals import post_save
 # from .models import RegisterProfile
-
+# home dashboard
 
 def convert_month(month_val):
     if len(str(month_val))<2:

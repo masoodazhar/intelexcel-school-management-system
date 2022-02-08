@@ -19,6 +19,7 @@ from home.models import Setting, SchoolProfile
 from datetime import datetime, time, date, timedelta
 
 # Create your views here.
+# Section Academics
 
 def time_diff(time_str1, time_str2):
     t1 = datetime.strptime(time_str1, '%H:%M')
